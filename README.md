@@ -1,2 +1,2 @@
 # destiny-py
-A Destiny 2 API wrapper written in Python
+An asynchronous Destiny 2 API wrapper written in Python
