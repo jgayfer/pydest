@@ -18,3 +18,9 @@ class API:
         url = 'https://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/{}/{}/'
         url = url.format(membership_type, display_name)
         return await self._get_request(url)
+
+
+    async def get_account_summary(self, membership_type, membership_id):
+        url = 'https://www.bungie.net/Platform/Destiny/{}/Account/{}/Summary/'
+        url = url.format(membership_type, membership_id)
+        return await self._get_request(url)
