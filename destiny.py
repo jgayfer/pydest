@@ -9,4 +9,5 @@ class Destiny:
 
     async def get_account(self, membership_type, display_name):
         json = await self.api.search_destiny_player(membership_type, display_name)
-        return Account(json)
+        if json['ErrorCode'] == 1 and json['Response']:
+            return Account(json)
