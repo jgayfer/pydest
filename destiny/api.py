@@ -1,4 +1,5 @@
 import aiohttp
+import re
 
 class API:
 
@@ -14,10 +15,11 @@ class API:
 
 
     def check_args(self, *args):
+        """Check API arguments are alphanumeric"""
         for arg in args:
-            arg = str(arg)
-            if ('/' in arg) or ('\\' in arg):
-                raise ValueError("arguments may not contain '/' or '\\'")
+            valid = re.match('^[\w-]+$', str(arg))
+            if not valid:
+                raise ValueError("arguments must consist of alphanumeric characters only")
 
 
     async def search_destiny_player(self, membership_type, display_name):

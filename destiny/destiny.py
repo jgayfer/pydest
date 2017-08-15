@@ -1,5 +1,5 @@
-from api import API
-from models.account import Account
+from destiny.api import API
+from destiny.models.account import Account
 
 class Destiny:
 
