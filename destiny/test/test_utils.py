@@ -1,5 +1,7 @@
 import unittest
+
 from destiny.utils import check_alphanumeric
+
 
 class TestCheckAlphanumeric(unittest.TestCase):
     """Unit test for check_alphanumeric()"""
@@ -26,7 +28,7 @@ class TestCheckAlphanumeric(unittest.TestCase):
 
 
     def test_alphabets_and_special_characters(self):
-        """Assert that a string with special characters is not alphanumeric"""
+        """Assert that a string with alphabets and special characters is not alphanumeric"""
         self.assertRaises(ValueError, check_alphanumeric, 'a/b\c)')
 
 
