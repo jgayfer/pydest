@@ -1,34 +1,36 @@
-import unittest
 import asyncio
-from unittest.mock import patch
-from aiohttp.test_utils import AioHTTPTestCase, unittest_run_loop
+import pytest
+from unittest.mock import MagicMock
 
-from destiny import Destiny
 import destiny
 from destiny.test.data import responses
 
-patch('destiny.api', lambda x: x).start()
 
-class TestGetAccount(unittest.TestCase):
+class TestGetAccount(object):
 
-    def setUp(self):
-        self.d = Destiny('dumb')
-        self.loop = asyncio.get_event_loop()
+    @pytest.mark.asyncio
+    async def test_account_found(self):
 
-    def tearDown(self):
-        self.loop.close()
+        mock = MagicMock()
+        mock.method.return_value = responses.account_found
+        execute_coro = asyncio.coroutine(mock.method)
 
-    @patch('destiny.destiny.api.search_destiny_player', new=responses.x())
-    def test_account_found(self):
-        async def test():
-            #mock_api_call.return_value = responses.search_destiny_player_ok
-            account = await self.d.find_account(1, 'dummy')
-            self.assertIsNotNone(account)
-        self.loop.run_until_complete(test())
+        wrapper = destiny.Destiny('dummy')
+        wrapper.api.search_destiny_player = execute_coro
+        account = await wrapper.get_account(-1, 'dummy_user')
+
+        assert account != None
 
 
+    @pytest.mark.asyncio
+    async def test_account_not_found(self):
 
+        mock = MagicMock()
+        mock.method.return_value = responses.account_not_found
+        execute_coro = asyncio.coroutine(mock.method)
 
+        wrapper = destiny.Destiny('dummy')
+        wrapper.api.search_destiny_player = execute_coro
+        account = await wrapper.get_account(-1, 'dummy_user')
 
-if __name__ == "__main__":
-    unittest.main()
+        assert account == None

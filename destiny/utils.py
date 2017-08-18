@@ -1,5 +1,6 @@
 import re
 
+
 def check_alphanumeric(*args):
     """Check arguments are alphanumeric"""
     for arg in args:
