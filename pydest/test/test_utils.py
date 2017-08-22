@@ -1,6 +1,6 @@
 import pytest
 
-from destiny.utils import check_alphanumeric
+from pydest.utils import check_alphanumeric
 
 
 class TestCheckAlphanumeric(object):

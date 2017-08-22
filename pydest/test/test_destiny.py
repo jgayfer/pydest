@@ -2,8 +2,8 @@ import asyncio
 import pytest
 from unittest.mock import MagicMock
 
-import destiny
-from destiny.test.data import responses
+import pydest
+from pydest.test.data import responses
 
 
 class TestGetAccount(object):
@@ -15,9 +15,9 @@ class TestGetAccount(object):
         mock.method.return_value = responses.account_found
         execute_coro = asyncio.coroutine(mock.method)
 
-        wrapper = destiny.Destiny('dummy')
-        wrapper.api.search_destiny_player = execute_coro
-        account = await wrapper.get_account(-1, 'dummy_user')
+        destiny = pydest.Destiny('dummy')
+        destiny.api.search_destiny_player = execute_coro
+        account = await destiny.get_account(-1, 'dummy_user')
 
         assert account != None
 
@@ -29,8 +29,8 @@ class TestGetAccount(object):
         mock.method.return_value = responses.account_not_found
         execute_coro = asyncio.coroutine(mock.method)
 
-        wrapper = destiny.Destiny('dummy')
-        wrapper.api.search_destiny_player = execute_coro
-        account = await wrapper.get_account(-1, 'dummy_user')
+        destiny = pydest.Destiny('dummy')
+        destiny.api.search_destiny_player = execute_coro
+        account = await destiny.get_account(-1, 'dummy_user')
 
         assert account == None

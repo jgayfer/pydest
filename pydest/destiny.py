@@ -1,5 +1,5 @@
-from destiny.api import API
-from destiny.models.account import Account
+from pydest.api import API
+from pydest.models.account import Account
 
 
 class Destiny:

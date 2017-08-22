@@ -1,7 +1,7 @@
 import aiohttp
 import re
 
-from destiny.utils import check_alphanumeric
+from pydest.utils import check_alphanumeric
 
 
 BASE_URL = 'https://www.bungie.net/Platform/Destiny/'
