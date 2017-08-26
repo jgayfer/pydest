@@ -24,7 +24,11 @@ the other GET endpoints when they leave the preview state. I also plan to add
 the POST endpoints when I have a better understanding of how they work.
 
 ## Installation
-[TODO]
+```
+$ git clone https://github.com/jgayfer/pydest
+$ cd pydest
+$ python3 -m pip install -U .
+```
 
 ## Usage
 This example illustrates the basic work flow for pydest (I'm assuming you're

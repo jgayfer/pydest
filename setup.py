@@ -11,6 +11,7 @@ with open('pydest/__init__.py') as f:
 
 setup(name='pydest',
       author='jgayfer',
+      author_email='gayfer.james@gmail.com',
       version=version,
       license='MIT',
       description='an asynchronous Destiny 2 API wrapper',
