@@ -30,6 +30,7 @@ the POST endpoints when I have a better understanding of how they work.
 This example illustrates the basic work flow for pydest (I'm assuming you're
 already running an event loop here)
 ```
+import aiohttp
 import pydest
 
 destiny = pydest.api('your-api-key')
