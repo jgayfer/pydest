@@ -18,12 +18,21 @@ class API:
         self.api_key = api_key
 
 
+    def __enter__(self):
+        self.session = aiohttp.ClientSession()
+        return self
+
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if self.session:
+            self.session.close()
+
+
     async def _get_request(self, url):
         """Make an async GET request and attempt to return json (dict)"""
         headers = {'X-API-KEY':'{}'.format(self.api_key)}
-        async with aiohttp.ClientSession() as sess:
-            async with sess.get(url, headers=headers) as r:
-                return await r.json()
+        async with self.session.get(url, headers=headers) as r:
+            return await r.json()
 
 
     async def get_destiny_manifest(self):

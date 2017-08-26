@@ -37,8 +37,9 @@ already running an event loop here)
 import aiohttp
 import pydest
 
-destiny = pydest.api('your-api-key')
-json_response = await destiny.search_destiny_player(1, 'jimmy')
+with pydest.API('your-api-key') as destiny:
+      json = await destiny.search_destiny_player(1, 'AsalX')
+      # Do stuff, or make additional api calls
 ```
 All of the API calls can be found in [api.py](./pydest/api.py), and I've added
 fairly descriptive docstring to each function to explain how to use them. I've
