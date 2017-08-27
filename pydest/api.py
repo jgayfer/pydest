@@ -71,17 +71,19 @@ class API:
                 A valid non-BungieNet membership type (BungieMembershipType)
             membership_id (int):
                 Destiny membership ID
-            components (tuple):
-                A tuple containing a list of components (DestinyComponentType)
-                to include in the response. At least one component is required
-                to receive results.
+            components (list):
+                A list containing the components  to include in the response.
+                (see Destiny.Responses.DestinyProfileResponse). At least one
+                component is required to receive results. Can use either ints
+                or strings.
 
         Returns:
             json (dict)
         """
         check_alphanumeric(membership_type, membership_id)
         url = BASE_URL + '{}/Profile/{}/?components={}'
-        url = url.format(membership_type, membership_id, ','.join(components))
+        url = url.format(membership_type, membership_id, ','.join([str(i) for i in components]))
+        print(url)
         return await self._get_request(url)
 
 
@@ -122,7 +124,7 @@ class API:
         return await self._get_request(url)
 
 
-    async def get_item(self, membership_type, membership_id, item_instance_id):
+    async def get_item(self, membership_type, membership_id, item_instance_id, components):
         """Retrieve the details of an instanced Destiny Item. An instanced Destiny
         item is one with an ItemInstanceId. Non-instanced items, such as materials,
         have no useful instance-specific details and thus are not queryable here.
@@ -134,13 +136,18 @@ class API:
                 Destiny membership ID
             item_instance_id (int):
                 The instance ID of the item
+            components (list):
+                A list containing the components to include in the response
+                (see Destiny.Responses.DestinyItemResponse). At least one
+                component is required to receive results. Can use either ints
+                or strings.
 
         Returns:
             json (dict)
         """
         check_alphanumeric(membership_type, membership_id, item_instance_id)
-        url = BASE_URL + '{}/Profile/{}/Item/{}'
-        url = url.format(membership_type, membership_id, item_instance_id)
+        url = BASE_URL + '{}/Profile/{}/Item/{}/?components={}'
+        url = url.format(membership_type, membership_id, item_instance_id, ','.join([str(i) for i in components]))
         return await self._get_request(url)
 
 
