@@ -65,3 +65,8 @@ Before these tests can be run, you'll need to create a `credentials.json` file i
   "api-key": "your-api-key"
 }
 ```
+The integration tests can be run from the root directory with the following command:
+```
+pytest pydest/test/test_integration.py
+```
+If you would like to run the unit tests in addition to the integration tests, just issue the command `pytest` from the root of this project.
