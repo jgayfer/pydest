@@ -1,4 +1,4 @@
-# What is Pydest?
+# Pydest
 
 Pydest is an asynchronous API wrapper for Destiny 2 written in Python. The goal of the project is fully support the Destiny 2 API while abstracting the details of formulating and making the request away from the user.
 
@@ -14,16 +14,16 @@ with pydest.API('your-api-key') as destiny:
 
 ## Supported Endpoints
 
-- GET: Destiny2.GetDestinyManifest
-- GET: Destiny2.SearchDestinyPlayer
-- GET: Destiny2.GetProfile
-- GET: Destiny2.GetCharacter
-- GET: Destiny2.GetClanWeeklyRewardState
-- GET: Destiny2.GetItem
-- GET: Destiny2.GetPostGameCarnageReport
-- GET: Destiny2.GetHistoricalStatsDefinition
-- GET: Destiny2.GetPublicMilestoneContent
-- GET: Destiny2.GetPublicMilestones
+- [GET: Destiny2.GetDestinyManifest](https://bungie-net.github.io/multi/operation_get_Destiny2-GetDestinyManifest.html#operation_get_Destiny2-GetDestinyManifest)
+- [GET: Destiny2.SearchDestinyPlayer](https://bungie-net.github.io/multi/operation_get_Destiny2-SearchDestinyPlayer.html#operation_get_Destiny2-SearchDestinyPlayer)
+- [GET: Destiny2.GetProfile](https://bungie-net.github.io/multi/operation_get_Destiny2-GetProfile.html#operation_get_Destiny2-GetProfile)
+- [GET: Destiny2.GetCharacter](https://bungie-net.github.io/multi/operation_get_Destiny2-GetCharacter.html#operation_get_Destiny2-GetCharacter)
+- [GET: Destiny2.GetClanWeeklyRewardState](https://bungie-net.github.io/multi/operation_get_Destiny2-GetClanWeeklyRewardState.html#operation_get_Destiny2-GetClanWeeklyRewardState)
+- [GET: Destiny2.GetItem](https://bungie-net.github.io/multi/operation_get_Destiny2-GetItem.html#operation_get_Destiny2-GetItem)
+- [GET: Destiny2.GetPostGameCarnageReport](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPostGameCarnageReport.html#operation_get_Destiny2-GetPostGameCarnageReport)
+- [GET: Destiny2.GetHistoricalStatsDefinition](https://bungie-net.github.io/multi/operation_get_Destiny2-GetHistoricalStatsDefinition.html#operation_get_Destiny2-GetHistoricalStatsDefinition)
+- [GET: Destiny2.GetPublicMilestoneContent](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPublicMilestoneContent.html#operation_get_Destiny2-GetPublicMilestoneContent)
+- [GET: Destiny2.GetPublicMilestones](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPublicMilestones.html#operation_get_Destiny2-GetPublicMilestones)
 
 All GET endpoints that are not in a preview state are supported. I will add support for the other GET endpoints when they leave the preview state. I also plan to add the POST endpoints when I have a better understanding of how they work.
 
@@ -39,7 +39,7 @@ $ python3 -m pip install -U .
 
 ## Usage
 
-In the [official documentation](https://bungie-net.github.io/multi/index.html), the endpoints have two types of parameters: **Path Parameters** and **Querystring Parameters**. Path parameters should be used as arguments in the same order as they are presented in the official docs. While querystring parameters must be the last argument, given as a Python list object.
+In the [official documentation](https://bungie-net.github.io/multi/index.html), the endpoints have two types of parameters: **Path Parameters** and **Querystring Parameters**. Path parameters should be used as arguments in the same order as they are presented in the official docs. While querystring parameters must be the last argument, given as a Python list object. The name of the actual function to call will be the exact same as in the official docs, but underscore naming is used instead of camel case (Ex. GetItem --> get_item).
 
 For example, say you want to call [Destiny.GetProfile](https://bungie-net.github.io/multi/operation_get_Destiny2-GetProfile.html#operation_get_Destiny2-GetProfile). The path parameters are **destinyMembershipId** of type int, and **membershipType** of type [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType). The querystring parameter, **components**, is an array of type [Destiny.DestinyComponentType](https://bungie-net.github.io/multi/schema_Destiny-DestinyComponentType.html#schema_Destiny-DestinyComponentType).
 
