@@ -12,48 +12,129 @@ with pydest.API('your-api-key') as destiny:
     response = await destiny.search_destiny_player(1, 'slayer117')
 ```
 
-## Supported Endpoints
+That's it!
 
-- [GET: Destiny2.GetDestinyManifest](https://bungie-net.github.io/multi/operation_get_Destiny2-GetDestinyManifest.html#operation_get_Destiny2-GetDestinyManifest)
-- [GET: Destiny2.SearchDestinyPlayer](https://bungie-net.github.io/multi/operation_get_Destiny2-SearchDestinyPlayer.html#operation_get_Destiny2-SearchDestinyPlayer)
-- [GET: Destiny2.GetProfile](https://bungie-net.github.io/multi/operation_get_Destiny2-GetProfile.html#operation_get_Destiny2-GetProfile)
-- [GET: Destiny2.GetCharacter](https://bungie-net.github.io/multi/operation_get_Destiny2-GetCharacter.html#operation_get_Destiny2-GetCharacter)
-- [GET: Destiny2.GetClanWeeklyRewardState](https://bungie-net.github.io/multi/operation_get_Destiny2-GetClanWeeklyRewardState.html#operation_get_Destiny2-GetClanWeeklyRewardState)
-- [GET: Destiny2.GetItem](https://bungie-net.github.io/multi/operation_get_Destiny2-GetItem.html#operation_get_Destiny2-GetItem)
-- [GET: Destiny2.GetPostGameCarnageReport](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPostGameCarnageReport.html#operation_get_Destiny2-GetPostGameCarnageReport)
-- [GET: Destiny2.GetHistoricalStatsDefinition](https://bungie-net.github.io/multi/operation_get_Destiny2-GetHistoricalStatsDefinition.html#operation_get_Destiny2-GetHistoricalStatsDefinition)
-- [GET: Destiny2.GetPublicMilestoneContent](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPublicMilestoneContent.html#operation_get_Destiny2-GetPublicMilestoneContent)
-- [GET: Destiny2.GetPublicMilestones](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPublicMilestones.html#operation_get_Destiny2-GetPublicMilestones)
+Currently all GET endpoints that are not in a preview state are supported by Pydest. The other GET endpoints will be added when they leave the preview state. Support for the POST endpoints will be added at a later date.
 
-All GET endpoints that are not in a preview state are supported. I will add support for the other GET endpoints when they leave the preview state. I also plan to add the POST endpoints when I have a better understanding of how they work.
+## Prerequisites
+The following dependencies are required to use Pydest. Note that `pytest` and any related plugins are only required if the user wishes to run the unit and integration tests.
+- Python 3.5+
+- `aiohttp` library
+- `pytest` library
+- `pytest-asyncio` (pytest plugin)
 
-For a detailed description of each endpoint, refer to the [official documentation](https://bungie-net.github.io/multi/index.html).
+Usually `pip` will handle the installation of these.
 
 ## Installation
-
 ```
 $ git clone https://github.com/jgayfer/pydest
 $ cd pydest
 $ python3 -m pip install -U .
 ```
+To verify that Pydest has installed correctly, open up the Python interpreter and run the command `import pydest`. If the interpreter doesn't make a fuss, then Pydest has installed successfully.
 
-## Usage
+## API Endpoints
 
-In the [official documentation](https://bungie-net.github.io/multi/index.html), the endpoints have two types of parameters: **Path Parameters** and **Querystring Parameters**. Path parameters should be used as arguments in the same order as they are presented in the official docs. While querystring parameters must be the last argument, given as a Python list object. The name of the actual function to call will be the exact same as in the official docs, but underscore naming is used instead of camel case (Ex. GetItem --> get_item).
+All of the functions below are *couroutines*. In other words, they must be awaited!
 
-For example, say you want to call [Destiny.GetProfile](https://bungie-net.github.io/multi/operation_get_Destiny2-GetProfile.html#operation_get_Destiny2-GetProfile). The path parameters are **destinyMembershipId** of type int, and **membershipType** of type [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType). The querystring parameter, **components**, is an array of type [Destiny.DestinyComponentType](https://bungie-net.github.io/multi/schema_Destiny-DestinyComponentType.html#schema_Destiny-DestinyComponentType).
+---
 
-We could make this request with Pydest as follows:
-```
-membership_id = '12345'
-membership_type = 1
-components = ['Characters', 'VendorReceipts']
+#### `pydest.API.get_destiny_manifest()`
+Get the current version of the manifest.
 
-with pydest.API('your-api-key') as destiny:
-    res = await destiny.get_profile(membership_id, membership_type, components)
-```
+**Response**: See [Destiny2.GetDestinyManifest](https://bungie-net.github.io/multi/operation_get_Destiny2-GetDestinyManifest.html#operation_get_Destiny2-GetDestinyManifest#Response)
 
-Special care have been taken to keep all arguments in the same order that they are presented in the [official documentation](https://bungie-net.github.io/multi/index.html). All of the API calls can be found in [api.py](./pydest/api.py), and I've added fairly descriptive docstring to each function to explain how to use them. But for the most part, you should be able to get by without diving into the code.
+---
+
+#### `pydest.API.search_destiny_player(membership_type, display_name)`
+Returns a list of Destiny memberships given a full Gamertag or PSN ID.
+
+######**Parameters**
+- `membership_type` A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
+- `display_name` The full gamertag or PSN id of the player. Spaces and case is ignored.
+
+**Response**: See [Destiny2.SearchDestinyPlayer](https://bungie-net.github.io/multi/operation_get_Destiny2-SearchDestinyPlayer.html#operation_get_Destiny2-SearchDestinyPlayer)
+
+---
+
+#### `pydest.API.get_profile(membership_type, membership_id, components)`
+Returns Destiny Profile information for the supplied membership.
+
+######**Parameters**
+- `membership_type` A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
+- `membership_id` The full gamertag or PSN id of the player. Spaces and case are ignored.
+- `components` A  Python list of [Destiny.DestinyComponentType](https://bungie-net.github.io/multi/schema_Destiny-DestinyComponentType.html#schema_Destiny-DestinyComponentType) (as strings or numeric values) to include in the response.
+
+**Response**: See [Destiny2.GetProfile](https://bungie-net.github.io/multi/operation_get_Destiny2-GetProfile.html#operation_get_Destiny2-GetProfile)
+
+---
+
+#### `pydest.API.get_character(membership_type, membership_id, character_id, components)`
+Returns character information for the supplied character.
+
+######**Parameters**
+- `membership_type` A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
+- `membership_id` The full gamertag or PSN id of the player. Spaces and case are ignored.
+- `character_id` ID of the character.
+- `components` A  Python list of [Destiny.DestinyComponentType](https://bungie-net.github.io/multi/schema_Destiny-DestinyComponentType.html#schema_Destiny-DestinyComponentType) (as strings or numeric values) to include in the response.
+
+**Response**: See [Destiny2.GetCharacter](https://bungie-net.github.io/multi/operation_get_Destiny2-GetCharacter.html#operation_get_Destiny2-GetCharacter)
+
+---
+
+#### `pydest.API.get_clan_weekly_reward_state(group_id)`
+Returns information on the weekly clan rewards and if the clan has earned them or not. Note that this will always report rewards as not redeemed.
+
+######**Parameters**
+- `group_id` A valid clan group id.
+
+**Response**: See [Destiny2.GetClanWeeklyRewardState](https://bungie-net.github.io/multi/operation_get_Destiny2-GetClanWeeklyRewardState.html#operation_get_Destiny2-GetClanWeeklyRewardState)
+
+---
+
+#### `pydest.API.get_item(membership_type, membership_id, item_instance_id, components)`
+Retrieve the details of an instanced Destiny Item. An instanced Destiny item is one with an ItemInstanceId. Non-instanced items, such as materials, have no useful instance-specific details and thus are not queryable here.
+
+######**Parameters**
+- `membership_type` A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
+- `membership_id` The full gamertag or PSN id of the player. Spaces and case are ignored.
+- `item_instance_id` The Instance ID of the destiny item.
+- `components` A  Python list of [Destiny.DestinyComponentType](https://bungie-net.github.io/multi/schema_Destiny-DestinyComponentType.html#schema_Destiny-DestinyComponentType) (as strings or numeric values) to include in the response.
+
+**Response**: See [Destiny2.GetItem](https://bungie-net.github.io/multi/operation_get_Destiny2-GetItem.html#operation_get_Destiny2-GetItem)
+
+---
+
+#### `pydest.API.get_post_game_carnage_report(activity_id)`
+Gets the available post game carnage report for the activity ID.
+
+######**Parameters**
+- `activity_id`The ID of the activity whose PGCR is requested.
+
+**Response**: See [Destiny2.GetPostGameCarnageReport](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPostGameCarnageReport.html#operation_get_Destiny2-GetPostGameCarnageReport)
+
+---
+
+#### `pydest.API.get_historical_stats_definition()`
+Gets historical stats definitions.
+
+**Response**: See [Destiny2.GetHistoricalStatsDefinition](https://bungie-net.github.io/multi/operation_get_Destiny2-GetHistoricalStatsDefinition.html#operation_get_Destiny2-GetHistoricalStatsDefinition)
+
+---
+
+#### `pydest.API.get_public_milestone_content(milestone_hash)`
+Gets custom localized content for the milestone of the given hash, if it exists.
+
+**Response**: See [Destiny2.GetPublicMilestoneContent](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPublicMilestoneContent.html#operation_get_Destiny2-GetPublicMilestoneContent)
+
+---
+
+#### `pydest.API.get_public_milestones()`
+Gets public information about currently available Milestones.
+
+**Response**: See [Destiny2.GetPublicMilestones](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPublicMilestones.html#operation_get_Destiny2-GetPublicMilestones)
+
+---
 
 ## Running Tests
 
@@ -67,6 +148,9 @@ Before these tests can be run, you'll need to create a `credentials.json` file i
 ```
 The integration tests can be run from the root directory with the following command:
 ```
-pytest pydest/test/test_integration.py
+pytest -k 'integration'
 ```
-If you would like to run the unit tests in addition to the integration tests, just issue the command `pytest` from the root of this project.
+Unit tests can be run from the root directory with:
+```
+pytest -k 'not integration'
+```
