@@ -49,7 +49,7 @@ Get the current version of the manifest.
 #### `pydest.API.search_destiny_player(membership_type, display_name)`
 Returns a list of Destiny memberships given a full Gamertag or PSN ID.
 
-######**Parameters**
+**Parameters**
 - `membership_type` A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
 - `display_name` The full gamertag or PSN id of the player. Spaces and case is ignored.
 
@@ -60,7 +60,7 @@ Returns a list of Destiny memberships given a full Gamertag or PSN ID.
 #### `pydest.API.get_profile(membership_type, membership_id, components)`
 Returns Destiny Profile information for the supplied membership.
 
-######**Parameters**
+**Parameters**
 - `membership_type` A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
 - `membership_id` The full gamertag or PSN id of the player. Spaces and case are ignored.
 - `components` A  Python list of [Destiny.DestinyComponentType](https://bungie-net.github.io/multi/schema_Destiny-DestinyComponentType.html#schema_Destiny-DestinyComponentType) (as strings or numeric values) to include in the response.
@@ -72,7 +72,7 @@ Returns Destiny Profile information for the supplied membership.
 #### `pydest.API.get_character(membership_type, membership_id, character_id, components)`
 Returns character information for the supplied character.
 
-######**Parameters**
+**Parameters**
 - `membership_type` A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
 - `membership_id` The full gamertag or PSN id of the player. Spaces and case are ignored.
 - `character_id` ID of the character.
@@ -85,7 +85,7 @@ Returns character information for the supplied character.
 #### `pydest.API.get_clan_weekly_reward_state(group_id)`
 Returns information on the weekly clan rewards and if the clan has earned them or not. Note that this will always report rewards as not redeemed.
 
-######**Parameters**
+**Parameters**
 - `group_id` A valid clan group id.
 
 **Response**: See [Destiny2.GetClanWeeklyRewardState](https://bungie-net.github.io/multi/operation_get_Destiny2-GetClanWeeklyRewardState.html#operation_get_Destiny2-GetClanWeeklyRewardState)
@@ -95,7 +95,7 @@ Returns information on the weekly clan rewards and if the clan has earned them o
 #### `pydest.API.get_item(membership_type, membership_id, item_instance_id, components)`
 Retrieve the details of an instanced Destiny Item. An instanced Destiny item is one with an ItemInstanceId. Non-instanced items, such as materials, have no useful instance-specific details and thus are not queryable here.
 
-######**Parameters**
+**Parameters**
 - `membership_type` A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
 - `membership_id` The full gamertag or PSN id of the player. Spaces and case are ignored.
 - `item_instance_id` The Instance ID of the destiny item.
@@ -108,7 +108,7 @@ Retrieve the details of an instanced Destiny Item. An instanced Destiny item is 
 #### `pydest.API.get_post_game_carnage_report(activity_id)`
 Gets the available post game carnage report for the activity ID.
 
-######**Parameters**
+**Parameters**
 - `activity_id`The ID of the activity whose PGCR is requested.
 
 **Response**: See [Destiny2.GetPostGameCarnageReport](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPostGameCarnageReport.html#operation_get_Destiny2-GetPostGameCarnageReport)
@@ -124,6 +124,9 @@ Gets historical stats definitions.
 
 #### `pydest.API.get_public_milestone_content(milestone_hash)`
 Gets custom localized content for the milestone of the given hash, if it exists.
+
+**Parameters**
+- `milestone_hash` The identifier for the milestone to be returned.
 
 **Response**: See [Destiny2.GetPublicMilestoneContent](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPublicMilestoneContent.html#operation_get_Destiny2-GetPublicMilestoneContent)
 
