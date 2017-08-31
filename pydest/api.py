@@ -16,16 +16,11 @@ class API:
 
     def __init__(self, api_key):
         self.api_key = api_key
-
-
-    def __enter__(self):
         self.session = aiohttp.ClientSession()
-        return self
 
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.session:
-            self.session.close()
+    def close_session(self):
+        self.session.close()
 
 
     async def _get_request(self, url):
