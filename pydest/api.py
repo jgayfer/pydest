@@ -4,7 +4,7 @@ import re
 from pydest.utils import check_alphanumeric
 
 
-BASE_URL = 'https://www.bungie.net/Platform/Destiny2/'
+BASE_URL = 'https://www.bungie.net/Platform/Destiny/'
 
 class API:
     """This module contains async requests for the Destiny 2 API.
