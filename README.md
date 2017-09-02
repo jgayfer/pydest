@@ -2,17 +2,23 @@
 
 Pydest is an asynchronous API wrapper for Destiny 2 written in Python. The goal of the project is fully support the Destiny 2 API while abstracting the details of formulating and making the request away from the user.
 
-Here's a quick example of Pydest in action (assuming this code is running in an event loop):
+Here are some examples of Pydest in action (assuming this code is running in an event loop):
 
 ```
-import aiohttp
 import pydest
 
-with pydest.API('your-api-key') as destiny:
-    response = await destiny.search_destiny_player(1, 'slayer117')
+destiny = pydest.Pydest('your-api-key')
+json = await destiny.api.search_destiny_player(1, 'slayer117')
 ```
 
-That's it!
+Pydest also has full support for easily decoding hash values from the Destiny 2 manifest.
+
+```
+import pydest
+
+destiny = pydest.Pydest('your-api-key')
+json = await pydest.decode_hash(-2143553567, 'DestinyActivityDefinition')
+```
 
 Currently all GET endpoints that are not in a preview state are supported by Pydest. The other GET endpoints will be added when they leave the preview state. Support for the POST endpoints will be added at a later date.
 
@@ -39,14 +45,14 @@ All of the functions below are *couroutines*. In other words, they must be await
 
 ---
 
-#### `pydest.API.get_destiny_manifest()`
+#### `Pydest.api.get_destiny_manifest()`
 Get the current version of the manifest.
 
 **Response**: See [Destiny2.GetDestinyManifest](https://bungie-net.github.io/multi/operation_get_Destiny2-GetDestinyManifest.html#operation_get_Destiny2-GetDestinyManifest#Response)
 
 ---
 
-#### `pydest.API.search_destiny_player(membership_type, display_name)`
+#### `Pydest.api.search_destiny_player(membership_type, display_name)`
 Returns a list of Destiny memberships given a full Gamertag or PSN ID.
 
 **Parameters**
@@ -57,7 +63,7 @@ Returns a list of Destiny memberships given a full Gamertag or PSN ID.
 
 ---
 
-#### `pydest.API.get_profile(membership_type, membership_id, components)`
+#### `Pydest.api.get_profile(membership_type, membership_id, components)`
 Returns Destiny Profile information for the supplied membership.
 
 **Parameters**
@@ -69,7 +75,7 @@ Returns Destiny Profile information for the supplied membership.
 
 ---
 
-#### `pydest.API.get_character(membership_type, membership_id, character_id, components)`
+#### `Pydest.api.get_character(membership_type, membership_id, character_id, components)`
 Returns character information for the supplied character.
 
 **Parameters**
@@ -82,7 +88,7 @@ Returns character information for the supplied character.
 
 ---
 
-#### `pydest.API.get_clan_weekly_reward_state(group_id)`
+#### `Pydest.api.get_clan_weekly_reward_state(group_id)`
 Returns information on the weekly clan rewards and if the clan has earned them or not. Note that this will always report rewards as not redeemed.
 
 **Parameters**
@@ -92,7 +98,7 @@ Returns information on the weekly clan rewards and if the clan has earned them o
 
 ---
 
-#### `pydest.API.get_item(membership_type, membership_id, item_instance_id, components)`
+#### `Pydest.api.get_item(membership_type, membership_id, item_instance_id, components)`
 Retrieve the details of an instanced Destiny Item. An instanced Destiny item is one with an ItemInstanceId. Non-instanced items, such as materials, have no useful instance-specific details and thus are not queryable here.
 
 **Parameters**
@@ -105,7 +111,7 @@ Retrieve the details of an instanced Destiny Item. An instanced Destiny item is 
 
 ---
 
-#### `pydest.API.get_post_game_carnage_report(activity_id)`
+#### `Pydest.api.get_post_game_carnage_report(activity_id)`
 Gets the available post game carnage report for the activity ID.
 
 **Parameters**
@@ -115,14 +121,14 @@ Gets the available post game carnage report for the activity ID.
 
 ---
 
-#### `pydest.API.get_historical_stats_definition()`
+#### `Pydest.api.get_historical_stats_definition()`
 Gets historical stats definitions.
 
 **Response**: See [Destiny2.GetHistoricalStatsDefinition](https://bungie-net.github.io/multi/operation_get_Destiny2-GetHistoricalStatsDefinition.html#operation_get_Destiny2-GetHistoricalStatsDefinition)
 
 ---
 
-#### `pydest.API.get_public_milestone_content(milestone_hash)`
+#### `Pydest.api.get_public_milestone_content(milestone_hash)`
 Gets custom localized content for the milestone of the given hash, if it exists.
 
 **Parameters**
@@ -132,12 +138,31 @@ Gets custom localized content for the milestone of the given hash, if it exists.
 
 ---
 
-#### `pydest.API.get_public_milestones()`
+#### `Pydest.api.get_public_milestones()`
 Gets public information about currently available Milestones.
 
 **Response**: See [Destiny2.GetPublicMilestones](https://bungie-net.github.io/multi/operation_get_Destiny2-GetPublicMilestones.html#operation_get_Destiny2-GetPublicMilestones)
 
 ---
+
+## Decoding Hash Values
+
+Decoding hash values from the Destiny 2 manifest is relatively straightforward. Don't forget that this function is a coroutine!
+
+#### `Pydest.decode_hash(hash_id, definition)`
+
+Get the corresponding static info for an item given it's hash value
+
+**Parameters**
+- `hash_id` The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
+- `definition` The type of entity to be decoded. In the [official documentation](), these entities are proceeded by a blue 'Manifest' tag (eg. *DestinyClassDefinition*).
+
+**Returns**: Python dictionary containing static information that the given hash and definition represent.
+
+**Raises**: *PydestException* if entry cannot be found
+
+
+
 
 ## Running Tests
 
