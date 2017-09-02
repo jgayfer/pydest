@@ -11,11 +11,13 @@ with open('credentials.json') as f:
 
 class TestGetDestinyManifest(object):
 
-    @pytest.mark.asyncio
     @pytest.fixture
+    @pytest.mark.asyncio
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.get_destiny_manifest()
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_destiny_manifest()
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
@@ -31,12 +33,15 @@ class TestSearchDestinyPlayer(object):
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.search_destiny_player(1, 'dummy')
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.search_destiny_player(1, 'dummy')
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
         assert type(res) is dict
+        pass
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
@@ -48,8 +53,10 @@ class TestGetProfile(object):
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.get_profile(1, '123', ['Characters'])
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_profile(1, '123', ['Characters'])
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
@@ -65,8 +72,10 @@ class TestGetCharacter(object):
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.get_profile(1, '123', '123')
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_character(1, '123', '123')
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
@@ -82,8 +91,10 @@ class TestGetClanWeeklyRewardState(object):
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.get_clan_weekly_reward_state('123')
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_clan_weekly_reward_state('123')
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
@@ -99,8 +110,10 @@ class TestGetItem(object):
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.get_item(1, '123', '123', ['ItemCommonData'])
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_item(1, '123', '123', ['ItemCommonData'])
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
@@ -116,8 +129,10 @@ class TestGetPostGameCarnageReport(object):
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.get_post_game_carnage_report('123')
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_post_game_carnage_report('123')
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
@@ -133,8 +148,10 @@ class TestGetHistoricalStatsDefinition(object):
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.get_historical_stats_definition()
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_historical_stats_definition()
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
@@ -150,8 +167,10 @@ class TestGetPublicMilestoneContent(object):
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.get_public_milestone_content('123')
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_public_milestone_content('123')
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
@@ -167,8 +186,10 @@ class TestGetPublicMilestones(object):
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
-        with pydest.API(api_key) as destiny:
-            return await destiny.get_public_milestones()
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_public_milestones()
+        destiny.close()
+        return r
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
