@@ -4,7 +4,7 @@ import re
 from pydest.utils import check_alphanumeric
 
 
-BASE_URL = 'https://www.bungie.net/Platform/Destiny/'
+BASE_URL = 'https://www.bungie.net/Platform/Destiny2/'
 
 class API:
     """This module contains async requests for the Destiny 2 API.
@@ -14,13 +14,9 @@ class API:
     found at https://bungie-net.github.io/multi/index.html
     """
 
-    def __init__(self, api_key):
+    def __init__(self, api_key, session):
         self.api_key = api_key
-        self.session = aiohttp.ClientSession()
-
-
-    def close_session(self):
-        self.session.close()
+        self.session = session
 
 
     async def _get_request(self, url):

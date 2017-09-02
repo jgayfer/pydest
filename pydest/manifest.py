@@ -1,27 +1,100 @@
-import asyncio
+import aiohttp
+import async_timeout
+import os
+import zipfile
+import json
 import sqlite3
 
+import pydest
+from pydest.dbase import DBase
+
+
+MANIFEST_ZIP = 'manifest_zip'
 
 class Manifest:
 
-    def __init__(self, db_file):
-        self.conn = sqlite3.connect(db_file)
-        self.cur = self.conn.cursor()
+    def __init__(self, api):
+        self.api = api
+
+    async def decode_hash(self, hash_id, definition):
+        """Get the corresponding static info for an item given it's hash value
+
+        Args:
+            hash_id:
+                The unique identifier of the entity to decode
+            definition:
+                The type of entity to be decoded (ex. 'DestinyClassDefinition')
+
+        Returns:
+            dict: json corresponding to the given hash_id and definition
+
+        Raises:
+            PydestException
+        """
+        manifest_file = await self._get_manifest_file()
+        if not manifest_file:
+            raise pydest.PydestException("Could not retrieve Manifest from Bungie.net")
+
+        with DBase(manifest_file) as db:
+            try:
+                res = db.query(hash_id, definition)
+            except sqlite3.OperationalError as e:
+                if e.args[0].startswith('no such table'):
+                    raise pydest.PydestException("Invalid definition: {}".format(definition))
+
+            if len(res) > 0:
+                return json.loads(res[0][0])
+            else:
+                raise pydest.PydestException("No entry found with id: {}".format(hash_id))
 
 
-    def __enter__(self):
-        return self
+    async def _get_manifest_file(self):
+        """Download the latest manifest file. If an up to date manifest file already exists,
+        return a reference to that file.
+
+        Returns:
+            str: the path to the latest manifest file. None if unable to retrieve manifest.
+        """
+        json = await self.api.get_destiny_manifest()
+
+        if json['ErrorCode'] != 1:
+            return None
+
+        manifest_url = 'https://www.bungie.net' + json['Response']['mobileWorldContentPaths']['en']
+        manifest_file_name = manifest_url.split('/')[-1]
+
+        if not os.path.isfile(manifest_file_name):
+            # Manifest doesn't exist, or isn't up to date
+            # Download and extract the current manifest
+            # Remove the zip file once finished
+            filename = await self._download_file(manifest_url, MANIFEST_ZIP)
+            if os.path.isfile('./{}'.format(MANIFEST_ZIP)):
+                zip_ref = zipfile.ZipFile('./{}'.format(MANIFEST_ZIP), 'r')
+                zip_ref.extractall('./')
+                zip_ref.close()
+                os.remove(MANIFEST_ZIP)
+            else:
+                return None
+
+        return manifest_file_name
 
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.conn:
-            self.conn.close()
+    async def _download_file(self, url, name):
+        """Async file download
 
-
-    def query(self, table, item_id):
-        sql = """
-              SELECT json FROM {}
-              WHERE id = {}
-              """
-        self.cur.execute(sql.format(table, item_id))
-        return self.cur.fetchall()
+        Args:
+            url (str):
+                The URL from which to download the file
+            name (str):
+                The name to give to the downloaded file
+        """
+        with async_timeout.timeout(10):
+            async with self.api.session.get(url) as response:
+                filename = os.path.basename(name)
+                with open(filename, 'wb') as f_handle:
+                    while True:
+                        chunk = await response.content.read(1024)
+                        if not chunk:
+                            break
+                        f_handle.write(chunk)
+                return await response.release()
