@@ -9,6 +9,7 @@ import pydest
 
 destiny = pydest.Pydest('your-api-key')
 json = await destiny.api.search_destiny_player(1, 'slayer117')
+destiny.close()
 ```
 
 Pydest also has full support for easily decoding hash values from the Destiny 2 manifest.
@@ -18,6 +19,7 @@ import pydest
 
 destiny = pydest.Pydest('your-api-key')
 json = await pydest.decode_hash(-2143553567, 'DestinyActivityDefinition')
+destiny.close()
 ```
 
 For a complete working example of Pydest, refer to the [examples](./examples) folder.
@@ -45,17 +47,17 @@ To verify that Pydest has installed correctly, open up the Python interpreter an
 
 #### `Pydest(api_key)`
 
-The base object for Pydest contains various helper functions, such as looking up items in the Destiny 2 manifest.
+The base object for Pydest contains various helper functions, such as looking up items in the Destiny 2 manifest. This object must be initialized before Pydest can be used.
 
 **Parameters**
-- `api_key` Bungie.net API key. Can be obtained from [Bungie.net](https://www.bungie.net/en/application)
+- `api_key` Bungie.net API key. A key can be obtained from [Bungie.net/en/application](https://www.bungie.net/en/application)
 
 **Returns**: `Pydest object`
 
 ---
 
 #### `Pydest.close()`
-Closes the client session. If this isn't called, a warning message will be displayed.
+Closes the Pydest client session. This should be called when the Pydest object is no longer needed. If this isn't called, a warning message will be displayed, but Pydest will stil function.
 
 ---
 
