@@ -5,7 +5,7 @@ import asyncio
 platforms = {'XBOX': 1, 'PLAYSTATION': 2, 'PC': 4}
 
 async def main():
-    destiny = pydest.Pydest('2ead071ad8c643559032dc155ee21170')
+    destiny = pydest.Pydest('api-key')
 
     platform = None
     while not platform:
