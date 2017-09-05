@@ -78,7 +78,7 @@ class API:
         return await self._get_request(url)
 
 
-    async def get_character(self, membership_type, membership_id, character_id):
+    async def get_character(self, membership_type, membership_id, character_id, components):
         """Returns character information for the supplied character
 
         Args:
@@ -88,13 +88,18 @@ class API:
                 Destiny membership ID
             character_id (int):
                 ID of the character
+            components (list):
+                A list containing the components  to include in the response.
+                (see Destiny.Responses.DestinyProfileResponse). At least one
+                component is required to receive results. Can use either ints
+                or strings.
 
         Returns:
             json (dict)
         """
         check_alphanumeric(membership_type, membership_id, character_id)
-        url = BASE_URL + '{}/Profile/{}/Character/{}/'
-        url = url.format(membership_type, membership_id, character_id)
+        url = BASE_URL + '{}/Profile/{}/Character/{}/?components={}'
+        url = url.format(membership_type, membership_id, character_id, ','.join([str(i) for i in components]))
         return await self._get_request(url)
 
 

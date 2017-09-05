@@ -73,7 +73,7 @@ class TestGetCharacter(object):
     @pytest.fixture
     async def res(self):
         destiny = pydest.Pydest(api_key)
-        r = await destiny.api.get_character(1, '123', '123')
+        r = await destiny.api.get_character(1, '123', '123', ['ProfileInventories'])
         destiny.close()
         return r
 
