@@ -70,7 +70,7 @@ Closes the Pydest client session. This should be called when the Pydest object i
 
 ---
 
-> decode_hash(hash_id, definition)
+> decode_hash(hash_id, definition, language="en")
 
 This function is a coroutine.
 
@@ -79,6 +79,7 @@ Get the corresponding static info for an item given it's hash value. This functi
 **Parameters**
 - `hash_id` - The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
 - `definition` - The type of entity to be decoded. In the [official documentation](https://bungie-net.github.io/multi/index.html), these entities are proceeded by a blue 'Manifest' tag (eg. *DestinyClassDefinition*).
+- `language` [optional] - The desired language of the response, given as a string. The following languages are supported (and should be given as shown): en, fr, es, de, it, ja, pt-br. If no language is given, English will be used.
 
 **Returns**: Python dictionary containing static information that the given hash and definition represent in JSON.
 

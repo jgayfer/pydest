@@ -18,14 +18,16 @@ class Pydest:
         self._manifest = Manifest(self.api)
 
 
-    async def decode_hash(self, hash_id, definition):
-        """Get the corresponding static info for an item given it's hash value
+    async def decode_hash(self, hash_id, definition, language="en"):
+        """Get the corresponding static info for an item given it's hash value from the Manifest
 
         Args:
             hash_id:
                 The unique identifier of the entity to decode
             definition:
                 The type of entity to be decoded (ex. 'DestinyClassDefinition')
+            lanauge:
+                The language to use when retrieving results from the Manifest
 
         Returns:
             dict: json corresponding to the given hash_id and definition
@@ -33,7 +35,7 @@ class Pydest:
         Raises:
             PydestException
         """
-        return await self._manifest.decode_hash(hash_id, definition)
+        return await self._manifest.decode_hash(hash_id, definition, language)
 
 
     def close(self):

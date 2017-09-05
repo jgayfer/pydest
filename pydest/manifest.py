@@ -15,8 +15,9 @@ class Manifest:
 
     def __init__(self, api):
         self.api = api
+        self.manifest_files = {'en': '', 'fr': '', 'es': '', 'it': '', 'ja': '', 'pt-br': ''}
 
-    async def decode_hash(self, hash_id, definition):
+    async def decode_hash(self, hash_id, definition, language):
         """Get the corresponding static info for an item given it's hash value
 
         Args:
@@ -31,7 +32,10 @@ class Manifest:
         Raises:
             PydestException
         """
-        manifest_file = await self._get_manifest_file()
+        if language not in self.manifest_files.keys():
+            raise pydest.PydestException("Unsupported language: {}".format(language))
+
+        manifest_file = await self._get_manifest_file(language)
         if not manifest_file:
             raise pydest.PydestException("Could not retrieve Manifest from Bungie.net")
 
@@ -48,19 +52,21 @@ class Manifest:
                 raise pydest.PydestException("No entry found with id: {}".format(hash_id))
 
 
-    async def _get_manifest_file(self):
+    async def _get_manifest_file(self, language):
         """Download the latest manifest file. If an up to date manifest file already exists,
         return a reference to that file.
 
         Returns:
             str: the path to the latest manifest file. None if unable to retrieve manifest.
         """
-        json = await self.api.get_destiny_manifest()
+        if self.manifest_files.get(language):
+            return self.manifest_files.get(language)
 
+        json = await self.api.get_destiny_manifest()
         if json['ErrorCode'] != 1:
             return None
 
-        manifest_url = 'https://www.bungie.net' + json['Response']['mobileWorldContentPaths']['en']
+        manifest_url = 'https://www.bungie.net' + json['Response']['mobileWorldContentPaths'][language]
         manifest_file_name = manifest_url.split('/')[-1]
 
         if not os.path.isfile(manifest_file_name):
@@ -76,7 +82,8 @@ class Manifest:
             else:
                 return None
 
-        return manifest_file_name
+        self.manifest_files[language] = manifest_file_name
+        return self.manifest_files.get(language)
 
 
     async def _download_file(self, url, name):
