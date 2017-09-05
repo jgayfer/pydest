@@ -25,7 +25,7 @@ class TestGetDestinyManifest(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
 
 
 class TestSearchDestinyPlayer(object):
@@ -45,7 +45,7 @@ class TestSearchDestinyPlayer(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
 
 
 class TestGetProfile(object):
@@ -64,7 +64,7 @@ class TestGetProfile(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
 
 
 class TestGetCharacter(object):
@@ -73,7 +73,7 @@ class TestGetCharacter(object):
     @pytest.fixture
     async def res(self):
         destiny = pydest.Pydest(api_key)
-        r = await destiny.api.get_character(1, '123', '123', ['ProfileInventories'])
+        r = await destiny.api.get_character(1, '123', '123', ['CharacterActivities'])
         destiny.close()
         return r
 
@@ -83,7 +83,7 @@ class TestGetCharacter(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
 
 
 class TestGetClanWeeklyRewardState(object):
@@ -102,7 +102,7 @@ class TestGetClanWeeklyRewardState(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
 
 
 class TestGetItem(object):
@@ -121,7 +121,7 @@ class TestGetItem(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
 
 
 class TestGetPostGameCarnageReport(object):
@@ -140,7 +140,7 @@ class TestGetPostGameCarnageReport(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
 
 
 class TestGetHistoricalStatsDefinition(object):
@@ -159,7 +159,7 @@ class TestGetHistoricalStatsDefinition(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
 
 
 class TestGetPublicMilestoneContent(object):
@@ -178,7 +178,7 @@ class TestGetPublicMilestoneContent(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
 
 
 class TestGetPublicMilestones(object):
@@ -197,4 +197,4 @@ class TestGetPublicMilestones(object):
 
     @pytest.mark.asyncio
     async def test_error_code(self, res):
-        assert res['ErrorCode'] == 1
+        assert res['ErrorCode'] != 7
