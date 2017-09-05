@@ -21,7 +21,7 @@ async def main():
     if res['ErrorCode'] == 1 and len(res['Response']) > 0:
         print("---")
         print("Player found!")
-        print("Display Name: {}".format(res['Response'][0]['supplementalDisplayName']))
+        print("Display Name: {}".format(res['Response'][0]['displayName']))
         print("Membership ID: {}".format(res['Response'][0]['membershipId']))
     else:
         print("Could not locate player.")
