@@ -2,6 +2,7 @@ import aiohttp
 import re
 
 from pydest.utils import check_alphanumeric
+import pydest
 
 
 BASE_URL = 'https://www.bungie.net/Platform/Destiny2/'
@@ -23,7 +24,11 @@ class API:
         """Make an async GET request and attempt to return json (dict)"""
         headers = {'X-API-KEY':'{}'.format(self.api_key)}
         async with self.session.get(url, headers=headers) as r:
-            return await r.json()
+            try:
+                json = await r.json()
+            except aiohttp.client_exceptions.ClientResponseError as e:
+                raise pydest.PydestException("Could not connect to Bungie.net")
+            return json
 
 
     async def get_destiny_manifest(self):
