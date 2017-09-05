@@ -2,6 +2,7 @@ import aiohttp
 import async_timeout
 import os
 import zipfile
+import asyncio
 
 from pydest.api import API
 from pydest.manifest import Manifest
@@ -9,10 +10,12 @@ from pydest.manifest import Manifest
 
 class Pydest:
 
-    def __init__(self, api_key):
-        self.session = aiohttp.ClientSession()
-        self.api = API(api_key, self.session)
-        self.manifest = Manifest(self.api)
+    def __init__(self, api_key, loop=None):
+        """Base class for Pydest"""
+        self._loop = asyncio.get_event_loop() if loop is None else loop
+        self._session = aiohttp.ClientSession(loop=self._loop)
+        self.api = API(api_key, self._session)
+        self._manifest = Manifest(self.api)
 
 
     async def decode_hash(self, hash_id, definition):
@@ -30,11 +33,11 @@ class Pydest:
         Raises:
             PydestException
         """
-        return await self.manifest.decode_hash(hash_id, definition)
+        return await self._manifest.decode_hash(hash_id, definition)
 
 
     def close(self):
-        self.session.close()
+        self._session.close()
 
 
 class PydestException(Exception):

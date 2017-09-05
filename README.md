@@ -47,13 +47,14 @@ To verify that Pydest has installed correctly, open up the Python interpreter an
 
 ### Pydest
 
->**class pydest.Pydest(api_key)**
+>**class pydest.Pydest(api_key,loop=None)**
 
 The base object for Pydest contains various helper functions, such as looking up items in the Destiny 2 manifest. This object must be initialized before Pydest can be used.
 
 **Parameters**
 
 - `api_key` - Bungie.net API key. A key can be obtained from [Bungie.net/en/application](https://www.bungie.net/en/application)
+- `loop` [optional] - The event loop to use for asynchronous operations. Defaults to `None`, in which case the default event loop is used via `asyncio.get_event_loop()`.
 
 ---
 
