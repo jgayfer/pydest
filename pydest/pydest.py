@@ -38,6 +38,16 @@ class Pydest:
         return await self._manifest.decode_hash(hash_id, definition, language)
 
 
+    async def update_manifest(self, language='en'):
+        """Update the manifest if there is a newer version available
+
+        Args:
+            language [optional]:
+                The language corresponding to the manifest to update
+        """
+        await self._manifest.update_manifest(language)
+
+
     def close(self):
         self._session.close()
 

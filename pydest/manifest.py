@@ -35,11 +35,10 @@ class Manifest:
         if language not in self.manifest_files.keys():
             raise pydest.PydestException("Unsupported language: {}".format(language))
 
-        manifest_file = await self._get_manifest_file(language)
-        if not manifest_file:
-            raise pydest.PydestException("Could not retrieve Manifest from Bungie.net")
+        if self.manifest_files.get(language) == '':
+            await self.update_manifest(language)
 
-        with DBase(manifest_file) as db:
+        with DBase(self.manifest_files.get(language)) as db:
             try:
                 res = db.query(hash_id, definition)
             except sqlite3.OperationalError as e:
@@ -52,15 +51,18 @@ class Manifest:
                 raise pydest.PydestException("No entry found with id: {}".format(hash_id))
 
 
-    async def _get_manifest_file(self, language):
-        """Download the latest manifest file. If an up to date manifest file already exists,
-        return a reference to that file.
+    async def update_manifest(self, language):
+        """Download the latest manifest file for the given language if necessary
 
-        Returns:
-            str: the path to the latest manifest file. None if unable to retrieve manifest.
+        Args:
+            language:
+                The language corresponding to the manifest to update
+
+        Raises:
+            PydestException
         """
-        if self.manifest_files.get(language):
-            return self.manifest_files.get(language)
+        if language not in self.manifest_files.keys():
+            raise pydest.PydestException("Unsupported language: {}".format(language))
 
         json = await self.api.get_destiny_manifest()
         if json['ErrorCode'] != 1:
@@ -80,10 +82,9 @@ class Manifest:
                 zip_ref.close()
                 os.remove(MANIFEST_ZIP)
             else:
-                return None
+                raise pydest.PydestException("Could not retrieve Manifest from Bungie.net")
 
         self.manifest_files[language] = manifest_file_name
-        return self.manifest_files.get(language)
 
 
     async def _download_file(self, url, name):

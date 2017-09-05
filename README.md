@@ -70,11 +70,11 @@ Closes the Pydest client session. This should be called when the Pydest object i
 
 ---
 
-> decode_hash(hash_id, definition, language="en")
+> decode_hash(hash_id, definition, language='en')
 
 This function is a coroutine.
 
-Get the corresponding static info for an item given it's hash value. This function will download and extract the latest version of the Destiny 2 manifest to the current directory. It's recommended to keep this file around so that it isn't downloaded each time an item needs to be decoded.
+Get the corresponding static info for an item given it's hash value. The first time this is called, it will download and extract the latest version of the Destiny 2 manifest to the current directory if it isn't already there. It's recommended to keep this file around so that it isn't downloaded each time an item needs to be decoded.
 
 **Parameters**
 - `hash_id` - The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
@@ -84,6 +84,17 @@ Get the corresponding static info for an item given it's hash value. This functi
 **Returns**: Python dictionary containing static information that the given hash and definition represent in JSON.
 
 **Raises**: *PydestException* if entry cannot be found
+
+---
+
+> update_manifest(language='en')
+
+This function is a coroutine.
+
+Updates the manifest corresponding to the language given. If no language is given, the default is English. This function is designed to be used for a program that is running for extended periods of time where the manifest may need to be updated. Usually the manifest is only updated the first time that `decode_hash()` is called. But as the manifest will likely change over time, this function will help keep the manifest current.
+
+**Parameters**
+- `language` [optional] - The desired language of the response, given as a string. The following languages are supported (and should be given as shown): en, fr, es, de, it, ja, pt-br. If no language is given, English will be used.
 
 ### API
 

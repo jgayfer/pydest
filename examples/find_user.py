@@ -5,6 +5,7 @@ import asyncio
 platforms = {'XBOX': 1, 'PLAYSTATION': 2, 'PC': 4}
 
 async def main():
+    """You will need to add your api key!"""
     destiny = pydest.Pydest('api-key')
 
     platform = None
