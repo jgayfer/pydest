@@ -22,7 +22,7 @@ json = await pydest.decode_hash(-2143553567, 'DestinyActivityDefinition')
 destiny.close()
 ```
 
-For a complete working example of Pydest, refer to the [examples](./examples) folder.
+For some working examples of Pydest, refer to the [examples](./examples) folder.
 
 Currently all GET endpoints that are not in a preview state are supported by Pydest. The other GET endpoints will be added when they leave the preview state. Support for the POST endpoints will be added at a later date.
 
@@ -75,6 +75,8 @@ Closes the Pydest client session. This should be called when the Pydest object i
 This function is a coroutine.
 
 Get the corresponding static info for an item given it's hash value. The first time this is called, it will download and extract the latest version of the Destiny 2 manifest to the current directory if it isn't already there. It's recommended to keep this file around so that it isn't downloaded each time an item needs to be decoded.
+
+Aside from the very first time this function is called (when the manifest is downloaded), this function is fast. There are no network requests made; the only action is querying a database. So don't worry about calling this lots!
 
 **Parameters**
 - `hash_id` - The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
