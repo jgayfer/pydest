@@ -18,7 +18,7 @@ Pydest also has full support for easily decoding hash values from the Destiny 2 
 import pydest
 
 destiny = pydest.Pydest('your-api-key')
-json = await pydest.decode_hash(-2143553567, 'DestinyActivityDefinition')
+json = await pydest.decode_hash(-2143693236, 'DestinyActivityDefinition')
 destiny.close()
 ```
 
