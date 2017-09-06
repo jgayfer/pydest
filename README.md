@@ -1,6 +1,6 @@
 # Pydest
 
-Pydest is an asynchronous API wrapper for Destiny 2 written in Python. The goal of the project is fully support the Destiny 2 API while abstracting the details of formulating and making the request away from the user.
+Pydest is an asynchronous API wrapper for Destiny 2 written in Python. The goal of the project is to fully support the Destiny 2 API while abstracting the details of formulating and making the request away from the user.
 
 Here are some examples of Pydest in action (assuming this code is running in an event loop):
 
