@@ -1,5 +1,7 @@
 import aiohttp
 import re
+import json
+from functools import partial
 
 from pydest.utils import check_alphanumeric
 import pydest
@@ -25,10 +27,15 @@ class API:
         headers = {'X-API-KEY':'{}'.format(self.api_key)}
         async with self.session.get(url, headers=headers) as r:
             try:
-                json = await r.json()
+                def twos_comp_32(val):
+                    val = int(val)
+                    if (val & (1 << (32 - 1))) != 0:
+                        val = val - (1 << 32)
+                    return val
+                json_res = await r.json(loads=partial(json.loads, parse_int=twos_comp_32))
             except aiohttp.client_exceptions.ClientResponseError as e:
                 raise pydest.PydestException("Could not connect to Bungie.net")
-            return json
+            return json_res
 
 
     async def get_destiny_manifest(self):
