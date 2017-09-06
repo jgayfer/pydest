@@ -66,7 +66,7 @@ class Manifest:
 
         json = await self.api.get_destiny_manifest()
         if json['ErrorCode'] != 1:
-            return None
+            raise pydest.PydestException("Could not retrieve Manifest from Bungie.net")
 
         manifest_url = 'https://www.bungie.net' + json['Response']['mobileWorldContentPaths'][language]
         manifest_file_name = manifest_url.split('/')[-1]
