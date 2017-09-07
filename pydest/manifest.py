@@ -38,6 +38,9 @@ class Manifest:
         if self.manifest_files.get(language) == '':
             await self.update_manifest(language)
 
+        # Convert hash to signed, as sqlite converts all values to signed
+        hash_id = self._twos_comp_32(hash_id)
+
         with DBase(self.manifest_files.get(language)) as db:
             try:
                 res = db.query(hash_id, definition)
@@ -106,3 +109,10 @@ class Manifest:
                             break
                         f_handle.write(chunk)
                 return await response.release()
+
+
+    def _twos_comp_32(self, val):
+        val = int(val)
+        if (val & (1 << (32 - 1))) != 0:
+            val = val - (1 << 32)
+        return val

@@ -25,17 +25,12 @@ class API:
     async def _get_request(self, url):
         """Make an async GET request and attempt to return json (dict)"""
         headers = {'X-API-KEY':'{}'.format(self.api_key)}
-        async with self.session.get(url, headers=headers) as r:
-            try:
-                def twos_comp_32(val):
-                    val = int(val)
-                    if (val & (1 << (32 - 1))) != 0:
-                        val = val - (1 << 32)
-                    return val
-                json_res = await r.json(loads=partial(json.loads, parse_int=twos_comp_32))
-            except aiohttp.client_exceptions.ClientResponseError as e:
-                raise pydest.PydestException("Could not connect to Bungie.net")
-            return json_res
+        try:
+            async with self.session.get(url, headers=headers) as r:
+                json_res = await r.json()
+        except aiohttp.client_exceptions.ClientResponseError as e:
+            raise pydest.PydestException("Could not connect to Bungie.net")
+        return json_res
 
 
     async def get_destiny_manifest(self):
