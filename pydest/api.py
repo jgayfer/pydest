@@ -86,7 +86,6 @@ class API:
         check_alphanumeric(membership_type, membership_id)
         url = BASE_URL + '{}/Profile/{}/?components={}'
         url = url.format(membership_type, membership_id, ','.join([str(i) for i in components]))
-        print(url)
         return await self._get_request(url)
 
 
@@ -112,7 +111,6 @@ class API:
         check_alphanumeric(membership_type, membership_id, character_id)
         url = BASE_URL + '{}/Profile/{}/Character/{}/?components={}'
         url = url.format(membership_type, membership_id, character_id, ','.join([str(i) for i in components]))
-        print(url)
         return await self._get_request(url)
 
 
