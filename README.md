@@ -218,6 +218,24 @@ Gets historical stats definitions.
 
 ---
 
+> get_historical_stats(membership_type, membership_id, character_id=0, groups=[], modes=[])
+
+This function is a coroutine.
+
+Gets historical stats for indicated character.
+
+**Parameters**
+- `membership_type` - A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
+- `membership_id` - The full gamertag or PSN id of the player. Spaces and case are ignored.
+- `character_id [optional]` - ID of the character. If not provided, stats for all characters will be returned.
+- `groups` - A list containing the groups of stats to include in the response (see [Destiny.HistoricalStats.Definitions.DestinyStatsGroupType](https://bungie-net.github.io/multi/schema_Destiny-HistoricalStats-Definitions-DestinyStatsGroupType.html#schema_Destiny-HistoricalStats-Definitions-DestinyStatsGroupType)).
+- `modes` - A list containing the game modes to include in the response (see [Destiny.HistoricalStats.Definitions.DestinyActivityModeType](https://bungie-net.github.io/multi/schema_Destiny-HistoricalStats-Definitions-DestinyActivityModeType.html#schema_Destiny-HistoricalStats-Definitions-DestinyActivityModeType)).
+
+**Response**
+See [Destiny.HistoricalStats.DestinyHistoricalStatsByPeriod](https://bungie-net.github.io/multi/schema_Destiny-HistoricalStats-DestinyHistoricalStatsByPeriod.html#schema_Destiny-HistoricalStats-DestinyHistoricalStatsByPeriod)
+
+---
+
 > get_public_milestone_content(milestone_hash)
 
 This function is a coroutine.

@@ -179,6 +179,32 @@ class API:
         return await self._get_request(url)
 
 
+    async def get_historical_stats(self, membership_type, membership_id, character_id=0, groups=[], modes=[]):
+        """Gets historical stats for indicated character
+
+        Args:
+            membership_type (int):
+                A valid non-BungieNet membership type (BungieMembershipType)
+            membership_id (int):
+                Destiny membership ID
+            character_id (int) [optional]:
+                The id of the character to retrieve stats for. If not provided, stats for all
+                characters will be retrieved.
+            groups (list - str/int):
+                A list containing the groups of stats to include in the response
+                (see Destiny.HistoricalStats.Definitions.DestinyStatsGroupType).
+            modes (list - str/int):
+                A list containing the game modes to include in the response
+                (see Destiny.HistoricalStats.Definitions.DestinyActivityModeType).
+
+        """
+        check_alphanumeric(membership_type, membership_id, character_id)
+        url = BASE_URL + '{}/Account/{}/Character/{}/Stats/?groups={}&modes={}'
+        url = url.format(membership_type, membership_id, character_id, ','.join([str(i) for i in groups]), ','.join([str(i) for i in modes]))
+        print(url)
+        return await self._get_request(url)
+
+
     async def get_public_milestone_content(self, milestone_hash):
         """Gets custom localized content for the milestone of
         the given hash, if it exists.
