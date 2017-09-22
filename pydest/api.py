@@ -201,7 +201,6 @@ class API:
         check_alphanumeric(membership_type, membership_id, character_id)
         url = BASE_URL + '{}/Account/{}/Character/{}/Stats/?groups={}&modes={}'
         url = url.format(membership_type, membership_id, character_id, ','.join([str(i) for i in groups]), ','.join([str(i) for i in modes]))
-        print(url)
         return await self._get_request(url)
 
 
