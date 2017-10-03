@@ -38,15 +38,22 @@ class Manifest:
         if self.manifest_files.get(language) == '':
             await self.update_manifest(language)
 
-        # Convert hash to signed, as sqlite converts all values to signed
-        hash_id = self._twos_comp_32(hash_id)
+        # Identifier is different for the DestinyHistorialStatsDefinition table
+        if definition == 'DestinyHistoricalStatsDefinition':
+            hash_id = '"{}"'.format(hash_id)
+            identifier = 'key'
+        else:
+            hash_id = self._twos_comp_32(hash_id)
+            identifier = "id"
 
         with DBase(self.manifest_files.get(language)) as db:
             try:
-                res = db.query(hash_id, definition)
+                res = db.query(hash_id, definition, identifier)
             except sqlite3.OperationalError as e:
                 if e.args[0].startswith('no such table'):
                     raise pydest.PydestException("Invalid definition: {}".format(definition))
+                else:
+                    raise e
 
             if len(res) > 0:
                 return json.loads(res[0][0])

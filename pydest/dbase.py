@@ -19,10 +19,10 @@ class DBase:
             self.conn.close()
 
 
-    def query(self, hash_id, definition):
+    def query(self, hash_id, definition, identifier):
         sql = """
               SELECT json FROM {}
-              WHERE id = {}
+              WHERE {} = {}
               """
-        self.cur.execute(sql.format(definition,hash_id))
+        self.cur.execute(sql.format(definition, identifier, hash_id))
         return self.cur.fetchall()
