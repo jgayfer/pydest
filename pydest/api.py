@@ -43,6 +43,26 @@ class API:
         return await self._get_request(url)
 
 
+    async def search_destiny_entities(self, entity_type, search_term, page=0):
+        """Gets a page list of Destiny items
+
+        Args:
+            entity_type:
+                The type of entity - ex. 'DestinyInventoryItemDefinition'
+            search_term:
+                The full gamertag or PSN id of the player. Spaces and case are ignored
+            page (optional):
+                Page number to return
+
+        Returns:
+            json (dict)
+        """
+        check_alphanumeric(entity_type, search_term, page)
+        url = BASE_URL + 'Armory/Search/{}/{}/?page={}'
+        url = url.format(entity_type, search_term, page)
+        return await self._get_request(url)
+
+
     async def search_destiny_player(self, membership_type, display_name):
         """Returns a list of Destiny memberships given a full Gamertag or PSN ID
 

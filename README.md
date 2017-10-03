@@ -18,7 +18,7 @@ Pydest also has full support for easily decoding hash values from the Destiny 2 
 import pydest
 
 destiny = pydest.Pydest('your-api-key')
-json = await pydest.decode_hash(-2143693236, 'DestinyActivityDefinition')
+json = await pydest.decode_hash(80726883, 'DestinyActivityDefinition')
 destiny.close()
 ```
 
@@ -118,6 +118,22 @@ This function is a coroutine.
 Get the current version of the manifest. This api call shouldn't be needed much, as `Pydest.decode_hash()` already takes care of most manifest use cases.
 
 **Response**: See [Destiny2.GetDestinyManifest](https://bungie-net.github.io/multi/operation_get_Destiny2-GetDestinyManifest.html#operation_get_Destiny2-GetDestinyManifest#Response)
+
+---
+
+> search_destiny_entities(entity_type, search_term, page=0)
+
+This function is a coroutine.
+
+Gets a page list of Destiny items.
+
+**Parameters**
+- `entity_type` - The type of entity - ex. 'DestinyInventoryItemDefinition'
+- `search_term` - The term to search for
+- `page` [optional] - Page number to return
+
+**Response**
+[Destiny2.DestinyEntitySearchResult](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyEntitySearchResult.html#schema_Destiny-Definitions-DestinyEntitySearchResult)
 
 ---
 
