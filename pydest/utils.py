@@ -4,6 +4,6 @@ import re
 def check_alphanumeric(*args):
     """Check arguments are alphanumeric"""
     for arg in args:
-        valid = re.match('^[\w|\s|_|\-|.|\']+$', str(arg))
+        valid = re.match('^[\w|\s|_|\-|#|.|\'|%]+$', str(arg))
         if not valid:
             raise ValueError("arguments must consist of alphanumeric characters only")
