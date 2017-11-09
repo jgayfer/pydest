@@ -9,6 +9,25 @@ with open('credentials.json') as f:
     api_key = json.load(f)['api-key']
 
 
+class TestGetBungieNetUserById(object):
+
+    @pytest.fixture
+    @pytest.mark.asyncio
+    async def res(self):
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_bungie_net_user_by_id(637429)
+        destiny.close()
+        return r
+
+    @pytest.mark.asyncio
+    async def test_is_dict(self, res):
+        assert type(res) is dict
+
+    @pytest.mark.asyncio
+    async def test_error_code(self, res):
+        assert res['ErrorCode'] != 7
+
+
 class TestGetDestinyManifest(object):
 
     @pytest.fixture

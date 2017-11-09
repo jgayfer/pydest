@@ -111,6 +111,20 @@ The API class contains all of the supported Destiny 2 API calls. The functions c
 
 ---
 
+> get_bungie_net_user_by_id(bungie_id)
+
+This function is a coroutine.
+
+Loads a bungienet user by membership id.
+
+**Parameters**
+- `bungie_id` - The requested Bungie.net membership id
+
+**Response**
+[User.GeneralUser](https://bungie-net.github.io/multi/schema_User-GeneralUser.html#schema_User-GeneralUser)
+
+---
+
 > get_destiny_manifest()
 
 This function is a coroutine.
