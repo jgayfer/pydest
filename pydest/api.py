@@ -1,9 +1,9 @@
 import aiohttp
 import re
 import json
+import urllib
 from functools import partial
 
-from pydest.utils import check_alphanumeric
 import pydest
 
 
@@ -25,8 +25,9 @@ class API:
     async def _get_request(self, url):
         """Make an async GET request and attempt to return json (dict)"""
         headers = {'X-API-KEY':'{}'.format(self.api_key)}
+        encoded_url = urllib.parse.quote(url, safe=':/?&')
         try:
-            async with self.session.get(url, headers=headers) as r:
+            async with self.session.get(encoded_url, headers=headers) as r:
                 json_res = await r.json()
         except aiohttp.client_exceptions.ClientResponseError as e:
             raise pydest.PydestException("Could not connect to Bungie.net")
@@ -57,7 +58,6 @@ class API:
         Returns:
             json (dict)
         """
-        check_alphanumeric(entity_type, search_term, page)
         url = BASE_URL + 'Armory/Search/{}/{}/?page={}'
         url = url.format(entity_type, search_term, page)
         return await self._get_request(url)
@@ -75,7 +75,6 @@ class API:
         Returns:
             json (dict)
         """
-        check_alphanumeric(membership_type, display_name)
         url = BASE_URL + 'SearchDestinyPlayer/{}/{}/'
         url = url.format(membership_type, display_name)
         return await self._get_request(url)
@@ -98,7 +97,6 @@ class API:
         Returns:
             json (dict)
         """
-        check_alphanumeric(membership_type, membership_id)
         url = BASE_URL + '{}/Profile/{}/?components={}'
         url = url.format(membership_type, membership_id, ','.join([str(i) for i in components]))
         return await self._get_request(url)
@@ -123,7 +121,6 @@ class API:
         Returns:
             json (dict)
         """
-        check_alphanumeric(membership_type, membership_id, character_id)
         url = BASE_URL + '{}/Profile/{}/Character/{}/?components={}'
         url = url.format(membership_type, membership_id, character_id, ','.join([str(i) for i in components]))
         return await self._get_request(url)
@@ -140,7 +137,6 @@ class API:
         Returns:
             json (dict)
         """
-        check_alphanumeric(group_id)
         url = BASE_URL + 'Clan/{}/WeeklyRewardState/'
         url = url.format(group_id)
         return await self._get_request(url)
@@ -167,7 +163,6 @@ class API:
         Returns:
             json (dict)
         """
-        check_alphanumeric(membership_type, membership_id, item_instance_id)
         url = BASE_URL + '{}/Profile/{}/Item/{}/?components={}'
         url = url.format(membership_type, membership_id, item_instance_id, ','.join([str(i) for i in components]))
         return await self._get_request(url)
@@ -183,7 +178,6 @@ class API:
         Returns:
             json (dict)
         """
-        check_alphanumeric(activity_id)
         url = BASE_URL + 'Stats/PostGameCarnageReport/{}/'
         url = url.format(activity_id)
         return await self._get_request(url)
@@ -218,7 +212,6 @@ class API:
                 (see Destiny.HistoricalStats.Definitions.DestinyActivityModeType).
 
         """
-        check_alphanumeric(membership_type, membership_id, character_id)
         url = BASE_URL + '{}/Account/{}/Character/{}/Stats/?groups={}&modes={}'
         url = url.format(membership_type, membership_id, character_id, ','.join([str(i) for i in groups]), ','.join([str(i) for i in modes]))
         return await self._get_request(url)
@@ -231,7 +224,6 @@ class API:
         Returns:
             json (dict)
         """
-        check_alphanumeric(milestone_hash)
         url = BASE_URL + 'Milestones/{}/Content/'
         url = url.format(milestone_hash)
         return await self._get_request(url)
