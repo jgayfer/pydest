@@ -26,7 +26,7 @@ class API:
     async def _get_request(self, url):
         """Make an async GET request and attempt to return json (dict)"""
         headers = {'X-API-KEY':'{}'.format(self.api_key)}
-        encoded_url = urllib.parse.quote(url, safe=':/?&')
+        encoded_url = urllib.parse.quote(url, safe=':/?&=,.')
         try:
             async with self.session.get(encoded_url, headers=headers) as r:
                 json_res = await r.json()
