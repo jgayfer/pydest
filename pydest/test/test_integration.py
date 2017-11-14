@@ -28,6 +28,25 @@ class TestGetBungieNetUserById(object):
         assert res['ErrorCode'] != 7
 
 
+class TestGetMembershipDataById(object):
+
+    @pytest.fixture
+    @pytest.mark.asyncio
+    async def res(self):
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_membership_data_by_id(637429)
+        destiny.close()
+        return r
+
+    @pytest.mark.asyncio
+    async def test_is_dict(self, res):
+        assert type(res) is dict
+
+    @pytest.mark.asyncio
+    async def test_error_code(self, res):
+        assert res['ErrorCode'] != 7
+
+
 class TestGetDestinyManifest(object):
 
     @pytest.fixture

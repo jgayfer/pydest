@@ -120,8 +120,25 @@ Loads a bungienet user by membership id.
 **Parameters**
 - `bungie_id` - The requested Bungie.net membership id
 
-**Response**
+**Response**:
 [User.GeneralUser](https://bungie-net.github.io/multi/schema_User-GeneralUser.html#schema_User-GeneralUser)
+
+---
+
+> get_membership_data_by_id(bungie_id, membership_type=-1)
+
+This function is a coroutine.
+
+Returns a list of accounts associated with the supplied membership ID and membership type. This will
+include all linked accounts (even when hidden) if supplied credentials permit it.
+
+**Parameters**
+- `bungie_id` - The requested Bungie.net membership id
+- `membership_type` [optional] - Type of the supplied membership ID. If not provided, data will be
+returned for all applicable platforms.
+
+**Response**:
+[User.UserMembershipData](https://bungie-net.github.io/multi/schema_User-UserMembershipData.html#schema_User-UserMembershipData)
 
 ---
 
@@ -146,7 +163,7 @@ Gets a page list of Destiny items.
 - `search_term` - The term to search for
 - `page` [optional] - Page number to return
 
-**Response**
+**Response**:
 [Destiny2.DestinyEntitySearchResult](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyEntitySearchResult.html#schema_Destiny-Definitions-DestinyEntitySearchResult)
 
 ---

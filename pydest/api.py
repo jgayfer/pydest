@@ -49,6 +49,26 @@ class API:
         return await self._get_request(url)
 
 
+    async def get_membership_data_by_id(self, bungie_id, membership_type=-1):
+        """Returns a list of accounts associated with the supplied membership ID and membership
+        type. This will include all linked accounts (even when hidden) if supplied credentials
+        permit it.
+
+        Args:
+            bungie_id:
+                The requested Bungie.net membership id
+            membership_type (optional):
+                Type of the supplied membership ID. If not provided, data will be returned for all
+                applicable platforms.
+
+        Returns:
+            json (dict)
+        """
+        url = USER_URL + 'GetMembershipsById/{}/{}/'
+        url = url.format(bungie_id, membership_type)
+        return await self._get_request(url)
+
+
     async def get_destiny_manifest(self):
         """Returns the current version of the manifest
 
