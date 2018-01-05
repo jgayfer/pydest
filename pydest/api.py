@@ -276,11 +276,17 @@ class API:
 
     async def get_groups_for_member(self, membership_type, membership_id):
         """Gets information about the groups an individual member has joined
-
+        
+        Args:
+            membership_type (int):
+                A valid non-BungieNet membership type (BungieMembershipType)
+            membership_id (int):
+                Destiny membership ID
+        
         Returns:
             json(dict)
         """
-        # /{filter}/{groupType}/ | 0(NO FILTER)/1(CLANS)
+        # /{membershipType}/{membershipId}/ | 0(NO FILTER)/1(CLANS)
         url = GROUP_URL + 'User/{}/{}/0/1/'
         url = url.format(membership_type, membership_id)
         return await self._get_request(url)
@@ -289,7 +295,11 @@ class API:
     async def get_weekly_milestones(self, group_id):
         """Gets the weekly milestones for a given groupId
 
-        returns json object
+        Args:
+            groupId (int):
+                The groupId for the clan that is being requested.
+
+        returns json(dict) 
         """
         # /Clan/{groupId}/WeeklyRewardState/
         url = DESTINY2_URL + 'Clan/{}/WeeklyRewardState/'.format(group_id)
@@ -297,11 +307,15 @@ class API:
         return await self._get_request(url)
 
 
-    async def get_weekly_milestone_definitions(self, milestoneHash):
+    async def get_weekly_milestone_definitions(self, milestone_hash):
         """Gets the weekly milestones definition for a given milestoneHash
-
-        returns json object
+        
+        Args:
+            milestone_hash (int):
+                The hash value that represents the milestone within the manifest
+                
+        returns json(dict)
         """
         # /Manifest/DestinyMilestoneDefinition/{milestoneHash}
-        url = DESTINY2_URL + 'Manifest/DestinyMilestoneDefinition/{}'.format(milestoneHash)
+        url = DESTINY2_URL + 'Manifest/DestinyMilestoneDefinition/{}'.format(milestone_hash)
         return await self._get_request(url)
