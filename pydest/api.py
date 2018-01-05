@@ -9,6 +9,7 @@ import pydest
 
 DESTINY2_URL = 'https://www.bungie.net/Platform/Destiny2/'
 USER_URL = 'https://www.bungie.net/Platform/User/'
+GROUP_URL = 'https://www.bungie.net/Platform/GroupV2/'
 
 class API:
     """This module contains async requests for the Destiny 2 API.
@@ -271,4 +272,36 @@ class API:
             json (dict)
         """
         url = DESTINY2_URL + 'Milestones/'
+        return await self._get_request(url)
+
+    async def get_groups_for_member(self, membership_type, membership_id):
+        """Gets information about the groups an individual member has joined
+
+        Returns:
+            json(dict)
+        """
+        # /{filter}/{groupType}/ | 0(NO FILTER)/1(CLANS)
+        url = GROUP_URL + 'User/{}/{}/0/1/'
+        url = url.format(membership_type, membership_id)
+        return await self._get_request(url)
+
+
+    async def get_weekly_milestones(self, group_id):
+        """Gets the weekly milestones for a given groupId
+
+        returns json object
+        """
+        # /Clan/{groupId}/WeeklyRewardState/
+        url = DESTINY2_URL + 'Clan/{}/WeeklyRewardState/'.format(group_id)
+        # using the returned json
+        return await self._get_request(url)
+
+
+    async def get_weekly_milestone_definitions(self, milestoneHash):
+        """Gets the weekly milestones definition for a given milestoneHash
+
+        returns json object
+        """
+        # /Manifest/DestinyMilestoneDefinition/{milestoneHash}
+        url = DESTINY2_URL + 'Manifest/DestinyMilestoneDefinition/{}'.format(milestoneHash)
         return await self._get_request(url)
