@@ -257,6 +257,10 @@ class API:
         """Gets custom localized content for the milestone of
         the given hash, if it exists.
 
+        Args:
+            milestone_hash (int):
+                A valid hash id of a Destiny 2 milestone
+
         Returns:
             json (dict)
         """
@@ -266,7 +270,7 @@ class API:
 
 
     async def get_public_milestones(self):
-        """Gets public information about currently available Milestones
+        """Gets information about the current public Milestones
 
         Returns:
             json (dict)
@@ -293,11 +297,11 @@ class API:
 
 
     async def get_weekly_milestones(self, group_id):
-        """Gets the weekly milestones for a given groupId
+        """Gets the weekly milestones for a clan
 
         Args:
             groupId (int):
-                The groupId for the clan that is being requested.
+                The groupId of clan.
 
         returns json(dict) 
         """

@@ -101,3 +101,4 @@ ENV/
 .mypy_cache/
 
 credentials.json
+.vscode/settings.json
