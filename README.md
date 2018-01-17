@@ -306,6 +306,35 @@ Gets public information about currently available Milestones.
 
 ---
 
+> get_group_for_member()
+
+This function is a coroutine.
+
+Gets information about the clan of a member.
+
+**Response**: See [GroupV2.GetGroupsForMember](https://bungie-net.github.io/multi/operation_get_GroupV2-GetGroupsForMember.html#operation_get_GroupV2-GetGroupsForMember)
+
+---
+
+> get_weekly_milestones()
+
+This function is a coroutine.
+
+Gets information about milestones for a clan
+
+**Response**: See [Destiny2.GetClanWeeklyRewardState](https://bungie-net.github.io/multi/operation_get_Destiny2-GetClanWeeklyRewardState.html#operation_get_Destiny2-GetClanWeeklyRewardState)
+
+---
+
+> get_weekly_milestone_definition()
+
+This function is a coroutine.
+
+This function retreives additional information for a milestone from the destiny2 Manifest.
+
+**Response**: See [Destiny.Definitions.Milestones.DestinyMilestoneDefinition](https://bungie-net.github.io/multi/schema_Destiny-Definitions-Milestones-DestinyMilestoneDefinition.html#schema_Destiny-Definitions-Milestones-DestinyMilestoneDefinition)
+---
+
 For additional information on how the API endpoints function, refer to the [official documentation](https://bungie-net.github.io/multi/index.html).
 
 ## Running Tests
