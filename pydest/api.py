@@ -311,8 +311,8 @@ class API:
         return await self._get_request(url)
 
 
-    async def get_weekly_milestone_definitions(self, milestone_hash):
-        """Gets the weekly milestones definition for a given milestoneHash
+    async def get_milestone_definitions(self, milestone_hash):
+        """Gets the milestones definition for a given milestoneHash
         
         Args:
             milestone_hash (int):

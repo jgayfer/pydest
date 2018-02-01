@@ -9,7 +9,25 @@ with open('credentials.json') as f:
     api_key = json.load(f)['api-key']
 
 
-class TestGetBungieNetUserById(object):
+class BaseTestClass(object):
+
+    _membership_id = 4611686018467257491
+    _membership_type = 4
+
+    @pytest.mark.asyncio
+    async def test_is_dict(self, res):
+        assert type(res) is dict
+
+    @pytest.mark.asyncio
+    async def test_error_code(self, res):
+        assert res['ErrorCode'] != 7
+    
+    @pytest.mark.asyncio
+    async def test_error_code_true(self, res):
+        assert res['ErrorCode'] == 1
+
+
+class TestGetBungieNetUserById(BaseTestClass):
 
     @pytest.fixture
     @pytest.mark.asyncio
@@ -19,16 +37,8 @@ class TestGetBungieNetUserById(object):
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetMembershipDataById(object):
+class TestGetMembershipDataById(BaseTestClass):
 
     @pytest.fixture
     @pytest.mark.asyncio
@@ -38,16 +48,8 @@ class TestGetMembershipDataById(object):
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetDestinyManifest(object):
+class TestGetDestinyManifest(BaseTestClass):
 
     @pytest.fixture
     @pytest.mark.asyncio
@@ -57,16 +59,8 @@ class TestGetDestinyManifest(object):
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestSearchDestinyPlayer(object):
+class TestSearchDestinyPlayer(BaseTestClass):
 
     @pytest.mark.asyncio
     @pytest.fixture
@@ -76,93 +70,61 @@ class TestSearchDestinyPlayer(object):
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
-        pass
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetProfile(object):
+class TestGetProfile(BaseTestClass):
 
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
         destiny = pydest.Pydest(api_key)
-        r = await destiny.api.get_profile(1, '123', ['Characters'])
+        r = await destiny.api.get_profile(self._membership_type, self._membership_id, ['Characters'])
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetCharacter(object):
+class TestGetCharacter(BaseTestClass):
 
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
         destiny = pydest.Pydest(api_key)
-        r = await destiny.api.get_character(1, '123', '123', ['CharacterActivities'])
+        profile = await destiny.api.get_profile(self._membership_type, self._membership_id, ["Characters"])
+        res = profile['Response']['characters']['data']
+        character_hash = ""
+        for item in res:
+            character_hash = item
+            break
+
+        r = await destiny.api.get_character(self._membership_type, self._membership_id, character_hash, ['CharacterActivities'])
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetClanWeeklyRewardState(object):
+class TestGetClanWeeklyRewardState(BaseTestClass):
 
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
         destiny = pydest.Pydest(api_key)
-        r = await destiny.api.get_clan_weekly_reward_state('123')
+        res = await destiny.api.get_groups_for_member(self._membership_type, self._membership_id)
+        group_id = res['Response']['results'][0]['member']['groupId']
+        r = await destiny.api.get_clan_weekly_reward_state(group_id)
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetItem(object):
+class TestGetItem(BaseTestClass):
 
     @pytest.mark.asyncio
     @pytest.fixture
     async def res(self):
         destiny = pydest.Pydest(api_key)
-        r = await destiny.api.get_item(1, '123', '123', ['ItemCommonData'])
+        r = await destiny.api.get_item(self._membership_type, self._membership_id, '1048266744', ['ItemCommonData'])
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetPostGameCarnageReport(object):
+class TestGetPostGameCarnageReport(BaseTestClass):
 
     @pytest.mark.asyncio
     @pytest.fixture
@@ -172,16 +134,8 @@ class TestGetPostGameCarnageReport(object):
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetHistoricalStatsDefinition(object):
+class TestGetHistoricalStatsDefinition(BaseTestClass):
 
     @pytest.mark.asyncio
     @pytest.fixture
@@ -191,16 +145,8 @@ class TestGetHistoricalStatsDefinition(object):
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetPublicMilestoneContent(object):
+class TestGetPublicMilestoneContent(BaseTestClass):
 
     @pytest.mark.asyncio
     @pytest.fixture
@@ -210,16 +156,8 @@ class TestGetPublicMilestoneContent(object):
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
 
-    @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
-
-
-class TestGetPublicMilestones(object):
+class TestGetPublicMilestones(BaseTestClass):
 
     @pytest.mark.asyncio
     @pytest.fixture
@@ -229,10 +167,32 @@ class TestGetPublicMilestones(object):
         destiny.close()
         return r
 
-    @pytest.mark.asyncio
-    async def test_is_dict(self, res):
-        assert type(res) is dict
+
+class TestGetGroupForMember(BaseTestClass):
 
     @pytest.mark.asyncio
-    async def test_error_code(self, res):
-        assert res['ErrorCode'] != 7
+    @pytest.fixture
+    async def res(self):
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_groups_for_member(1, 4611686018467257491)
+        destiny.close()
+        return r
+
+
+class TestGetMilestoneDefinitions(BaseTestClass):
+
+    @pytest.mark.asyncio
+    @pytest.fixture
+    async def res(self):
+        destiny = pydest.Pydest(api_key)
+        milestone_r = await destiny.api.get_public_milestones()
+        ms = milestone_r['Response']
+        milestone_hash = ""
+        for item in ms:
+            milestone_hash = item
+            break
+            
+        r = await destiny.api.get_milestone_definitions(milestone_hash)
+        destiny.close()
+        return r
+        
