@@ -24,12 +24,12 @@ class API:
         self.session = session
 
 
-    async def _get_request(self, url):
+    async def _get_request(self, url, payload={}):
         """Make an async GET request and attempt to return json (dict)"""
-        headers = {'X-API-KEY':'{}'.format(self.api_key)}
+        headers = {'X-API-KEY':f'{self.api_key}'}
         encoded_url = urllib.parse.quote(url, safe=':/?&=,.')
         try:
-            async with self.session.get(encoded_url, headers=headers) as r:
+            async with self.session.get(encoded_url, headers=headers, params=payload) as r:
                 json_res = await r.json()
         except aiohttp.client_exceptions.ClientResponseError as e:
             raise pydest.PydestException("Could not connect to Bungie.net")
@@ -45,8 +45,7 @@ class API:
         Returns:
             json (dict)
         """
-        url = USER_URL + 'GetBungieNetUserById/{}/'
-        url = url.format(bungie_id)
+        url = USER_URL + f'GetBungieNetUserById/{bungie_id}/'
         return await self._get_request(url)
 
 
@@ -65,8 +64,7 @@ class API:
         Returns:
             json (dict)
         """
-        url = USER_URL + 'GetMembershipsById/{}/{}/'
-        url = url.format(bungie_id, membership_type)
+        url = USER_URL + f'GetMembershipsById/{bugnie_id}/{membership_type}/'
         return await self._get_request(url)
 
 
@@ -94,9 +92,9 @@ class API:
         Returns:
             json (dict)
         """
-        url = DESTINY2_URL + 'Armory/Search/{}/{}/?page={}'
-        url = url.format(entity_type, search_term, page)
-        return await self._get_request(url)
+        payload = {'page': page}
+        url = DESTINY2_URL + f'Armory/Search/{entity_type}/{search_term}/'
+        return await self._get_request(url, payload)
 
 
     async def search_destiny_player(self, membership_type, display_name):
@@ -111,8 +109,7 @@ class API:
         Returns:
             json (dict)
         """
-        url = DESTINY2_URL + 'SearchDestinyPlayer/{}/{}/'
-        url = url.format(membership_type, display_name)
+        url = DESTINY2_URL + f'SearchDestinyPlayer/{membership_type}/{display_name}/'
         return await self._get_request(url)
 
 
@@ -133,9 +130,9 @@ class API:
         Returns:
             json (dict)
         """
-        url = DESTINY2_URL + '{}/Profile/{}/?components={}'
-        url = url.format(membership_type, membership_id, ','.join([str(i) for i in components]))
-        return await self._get_request(url)
+        payload = {'components': ','.join([str(i) for i in components])}
+        url = DESTINY2_URL + f'{membership_type}/Profile/{membership_id}/'
+        return await self._get_request(url, payload)
 
 
     async def get_character(self, membership_type, membership_id, character_id, components):
@@ -157,9 +154,9 @@ class API:
         Returns:
             json (dict)
         """
-        url = DESTINY2_URL + '{}/Profile/{}/Character/{}/?components={}'
-        url = url.format(membership_type, membership_id, character_id, ','.join([str(i) for i in components]))
-        return await self._get_request(url)
+        payload = {'components': ','.join([str(i) for i in components])}
+        url = DESTINY2_URL + f'{membership_type}/Profile/{membership_id}/Character/{character_id}/'
+        return await self._get_request(url, payload)
 
 
     async def get_clan_weekly_reward_state(self, group_id):
@@ -173,8 +170,7 @@ class API:
         Returns:
             json (dict)
         """
-        url = DESTINY2_URL + 'Clan/{}/WeeklyRewardState/'
-        url = url.format(group_id)
+        url = DESTINY2_URL + f'Clan/{group_id}/WeeklyRewardState/'
         return await self._get_request(url)
 
 
@@ -199,9 +195,9 @@ class API:
         Returns:
             json (dict)
         """
-        url = DESTINY2_URL + '{}/Profile/{}/Item/{}/?components={}'
-        url = url.format(membership_type, membership_id, item_instance_id, ','.join([str(i) for i in components]))
-        return await self._get_request(url)
+        payload = {'components': ','.join([str(i) for i in components])}
+        url = DESTINY2_URL + f'{membership_type}/Profile/{membership_id}/Item/{item_instance_id}/'
+        return await self._get_request(url, payload)
 
 
     async def get_post_game_carnage_report(self, activity_id):
@@ -214,8 +210,7 @@ class API:
         Returns:
             json (dict)
         """
-        url = DESTINY2_URL + 'Stats/PostGameCarnageReport/{}/'
-        url = url.format(activity_id)
+        url = DESTINY2_URL + f'Stats/PostGameCarnageReport/{activity_id}/'
         return await self._get_request(url)
 
 
@@ -248,9 +243,9 @@ class API:
                 (see Destiny.HistoricalStats.Definitions.DestinyActivityModeType).
 
         """
-        url = DESTINY2_URL + '{}/Account/{}/Character/{}/Stats/?groups={}&modes={}'
-        url = url.format(membership_type, membership_id, character_id, ','.join([str(i) for i in groups]), ','.join([str(i) for i in modes]))
-        return await self._get_request(url)
+        payload = {'groups': ','.join([str(i) for i in groups]), 'modes': ','.join([str(i) for i in modes])}
+        url = DESTINY2_URL + f'{membership_type}/Account/{membership_id}/Character/{character_id}/Stats/'
+        return await self._get_request(url, payload)
 
 
     async def get_public_milestone_content(self, milestone_hash):
@@ -264,8 +259,7 @@ class API:
         Returns:
             json (dict)
         """
-        url = DESTINY2_URL + 'Milestones/{}/Content/'
-        url = url.format(milestone_hash)
+        url = DESTINY2_URL + f'Milestones/{milestone_hash}/Content/'
         return await self._get_request(url)
 
 
@@ -291,8 +285,7 @@ class API:
             json(dict)
         """
         # /{membershipType}/{membershipId}/ | 0(NO FILTER)/1(CLANS)
-        url = GROUP_URL + 'User/{}/{}/0/1/'
-        url = url.format(membership_type, membership_id)
+        url = GROUP_URL + f'User/{membership_type}/{membership_id}/0/1/'
         return await self._get_request(url)
 
 
@@ -306,7 +299,7 @@ class API:
         returns json(dict) 
         """
         # /Clan/{groupId}/WeeklyRewardState/
-        url = DESTINY2_URL + 'Clan/{}/WeeklyRewardState/'.format(group_id)
+        url = DESTINY2_URL + f'Clan/{group_id}/WeeklyRewardState/'
         # using the returned json
         return await self._get_request(url)
 
@@ -321,5 +314,5 @@ class API:
         returns json(dict)
         """
         # /Manifest/DestinyMilestoneDefinition/{milestoneHash}
-        url = DESTINY2_URL + 'Manifest/DestinyMilestoneDefinition/{}'.format(milestone_hash)
+        url = DESTINY2_URL + f'Manifest/DestinyMilestoneDefinition/{milestone_hash}'
         return await self._get_request(url)
