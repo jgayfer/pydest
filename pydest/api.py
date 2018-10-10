@@ -66,6 +66,28 @@ class API:
         """
         url = USER_URL + f'GetMembershipsById/{bugnie_id}/{membership_type}/'
         return await self._get_request(url)
+    
+    
+    async def get_linked_profiles(self, bungie_id, membership_type=-1):
+        """Returns a summary information about all profiles linked to the requesting membership
+        type/membership ID that have valid Destiny information. The passed-in Membership
+        Type/Membership ID may be a Bungie.Net membership or a Destiny membership. It only returns
+        the minimal amount of data to begin making more substantive requests, but will hopefully 
+        serve as a useful alternative to UserServices for people who just care about Destiny data.
+        Note that it will only return linked accounts whose linkages you are allowed to view.
+
+        Args:
+            bungie_id:
+                The requested Bungie.net membership id
+            membership_type (optional):
+                Type of the supplied membership ID. If not provided, data will be returned for all
+                applicable platforms.
+
+        Returns:
+            json (dict)
+        """
+        url = USER_URL + f'{membership_type}/Profile/{bungie_id}/LinkedProfiles/'
+        return await self._get_request(url)
 
 
     async def get_destiny_manifest(self):
