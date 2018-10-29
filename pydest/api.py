@@ -98,6 +98,21 @@ class API:
         """
         url = DESTINY2_URL + 'Manifest'
         return await self._get_request(url)
+    
+    
+    async def get_manifest_object(self, entity_type, hash_id):
+        """Returns the static definition of an entity of the given Type and hash identifier.
+        Examine the API Documentation for the Type Names of entities that have their own definitions.
+        Note that the return type will always *inherit from* DestinyDefinition, but the specific type
+        returned will be the requested entity type if it can be found. Please don't use this as a chatty
+        alternative to the Manifest database if you require large sets of data, but for simple and one-off
+        accesses this should be handy.
+
+        Returns:
+            json (dict)
+        """
+        url = DESTINY2_URL + f'Manifest/{entity_type}/{hash_id}/'
+        return await self._get_request(url)
 
 
     async def search_destiny_entities(self, entity_type, search_term, page=0):
@@ -338,3 +353,55 @@ class API:
         # /Manifest/DestinyMilestoneDefinition/{milestoneHash}
         url = DESTINY2_URL + f'Manifest/DestinyMilestoneDefinition/{milestone_hash}'
         return await self._get_request(url)
+    
+    
+    async def get_vendors(self, membership_type, membership_id, character_id, components):
+        """Get currently available vendors from the list of vendors that can possibly have rotating
+        inventory. Note that this does not include things like preview vendors and vendors-as-kiosks,
+        neither of whom have rotating/dynamic inventories. Use their definitions as-is for those.
+
+        Args:
+            membership_type (int):
+                A valid non-BungieNet membership type (BungieMembershipType)
+            membership_id (int):
+                Destiny membership ID
+            character_id (int):
+                The ID of the character to retrieve vendors for
+            components (list):
+                A list containing the components to include in the response
+                (see Destiny.Responses.DestinyItemResponse). At least one
+                component is required to receive results. Can use either ints
+                or strings.
+
+        Returns:
+            json (dict)
+        """
+        payload = {'components': ','.join([str(i) for i in components])}
+        url = DESTINY2_URL + f'{membership_type}/Profile/{membership_id}/Character/{character_id}/Vendors/'
+        return await self._get_request(url, payload)
+
+    
+    async def get_vendor(self, membership_type, membership_id, character_id, vendor_hash, components):
+        """Get the details of a specific Vendor.
+
+        Args:
+            membership_type (int):
+                A valid non-BungieNet membership type (BungieMembershipType)
+            membership_id (int):
+                Destiny membership ID
+            character_id (int):
+                The ID of the character to retrieve vendor for
+            vendor_hash (int):
+                The hash of the vendor to retrieve
+            components (list):
+                A list containing the components to include in the response
+                (see Destiny.Responses.DestinyItemResponse). At least one
+                component is required to receive results. Can use either ints
+                or strings.
+
+        Returns:
+            json (dict)
+        """
+        payload = {'components': ','.join([str(i) for i in components])}
+        url = DESTINY2_URL + f'{membership_type}/Profile/{membership_id}/Character/{character_id}/Vendors/{vendor_hash}/'
+        return await self._get_request(url, payload)
