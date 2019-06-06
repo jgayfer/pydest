@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
         name="pydest",
-        version="0.0.1",
+        version=version,
         author="James Gayfer",
         author_email="gayfer.james@gmail.com",
         description="Async wrapper for Destiny 2 API",
