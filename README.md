@@ -37,9 +37,7 @@ Usually `pip` will handle the installation of these.
 
 ## Installation
 ```
-$ git clone https://github.com/jgayfer/pydest
-$ cd pydest
-$ python3 -m pip install -U .
+$ pip install pydest
 ```
 To verify that Pydest has installed correctly, open up the Python interpreter and run the command `import pydest`. If the interpreter doesn't make a fuss, then Pydest has installed successfully.
 
