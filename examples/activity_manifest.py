@@ -16,7 +16,7 @@ async def main():
     print("Activity Name: {}".format(activity2['displayProperties']['name']))
     print("Description: {}".format(activity2['displayProperties']['description']))
 
-    destiny.close()
+    await destiny.close()
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())

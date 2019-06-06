@@ -27,7 +27,7 @@ async def main():
     else:
         print("Could not locate player.")
 
-    destiny.close()
+    await destiny.close()
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(main())
