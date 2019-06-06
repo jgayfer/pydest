@@ -1,19 +1,25 @@
+import setuptools
 import re
-from distutils.core import setup
 
-requirements = []
-with open('requirements.txt') as f:
-    requirements = f.read().splitlines()
-
-version = ''
 with open('pydest/__init__.py') as f:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
-setup(name='pydest',
-      author='jgayfer',
-      author_email='gayfer.james@gmail.com',
-      version=version,
-      license='MIT',
-      description='an asynchronous Destiny 2 API wrapper',
-      install_requires=requirements,
-      packages=['pydest'])
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
+setuptools.setup(
+        name="pydest",
+        version="0.0.1",
+        author="James Gayfer",
+        author_email="gayfer.james@gmail.com",
+        description="Async wrapper for Destiny 2 API",
+        long_description=long_description,
+        long_description_content_type="text/markdown",
+        url="https://github.com/jgayfer/pydest",
+        packages=setuptools.find_packages(),
+        classifiers=[
+            "Programming Language :: Python :: 3",
+            "License :: OSI Approved :: MIT License",
+            "Operating System :: OS Independent",
+            ],
+        )
