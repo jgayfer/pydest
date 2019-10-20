@@ -323,3 +323,21 @@ class API:
         # /Manifest/DestinyMilestoneDefinition/{milestoneHash}
         url = DESTINY2_URL + 'Manifest/DestinyMilestoneDefinition/{}'.format(milestone_hash)
         return await self._get_request(url)
+ 
+    async def get_activity_history(self, membership_type, membership_id, character_id=0):
+        """Gets activity history stats for indicated character
+        
+        Args:
+            membership_type (int):
+                A valid non-BungieNet membership type
+            membership_id (int):
+                The Destiny membershipId of the user to retrieve
+            character_id (int) [optional]:
+                The id of the character to retrieve stats for. If not provided, stats for all
+                characters will be retrieved.
+        
+        returns json(dict)
+        """
+        # /Destiny2/{membershipType}/Account/{destinyMembershipId}/Character/{characterId}/Stats/Activities/
+        url = DESTINY2_URL + 'Destiny2/{}/Account/{}/Character/{}/Stats/Activities/'.format(membership_type, membership_id, character_id)
+        return await self._get_request(url)
