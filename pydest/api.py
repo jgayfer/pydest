@@ -324,7 +324,7 @@ class API:
         url = DESTINY2_URL + 'Manifest/DestinyMilestoneDefinition/{}'.format(milestone_hash)
         return await self._get_request(url)
  
-    async def get_activity_history(self, membership_type, membership_id, character_id=0):
+    async def get_activity_history(self, membership_type, membership_id, character_id=0, count=1, mode=None, page=0):
         """Gets activity history stats for indicated character
         
         Args:
@@ -335,9 +335,17 @@ class API:
             character_id (int) [optional]:
                 The id of the character to retrieve stats for. If not provided, stats for all
                 characters will be retrieved.
-        
+            count (int):
+                Number of rows to return
+            mode (int):
+                A filter for the activity mode to be returned. None returns all activities.
+                See the documentation for DestinyActivityModeType for valid values,
+                and pass in string representation.
+            page (int):
+                Page number to return, starting with 0
+
         returns json(dict)
         """
-        # /Destiny2/{membershipType}/Account/{destinyMembershipId}/Character/{characterId}/Stats/Activities/
-        url = DESTINY2_URL + 'Destiny2/{}/Account/{}/Character/{}/Stats/Activities/'.format(membership_type, membership_id, character_id)
+        # /{membershipType}/Account/{destinyMembershipId}/Character/{characterId}/Stats/Activities/
+        url = DESTINY2_URL + '{}/Account/{}/Character/{}/Stats/Activities/?count={}&mode={}&page={}'.format(membership_type, membership_id, character_id, count, mode, page)
         return await self._get_request(url)
