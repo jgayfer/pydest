@@ -339,13 +339,12 @@ class API:
                 Number of rows to return
             mode (int):
                 A filter for the activity mode to be returned. None returns all activities.
-                See the documentation for DestinyActivityModeType for valid values,
-                and pass in string representation.
+                (see Destiny.HistoricalStats.Definitions.DestinyActivityModeType for valid values.)
             page (int):
                 Page number to return, starting with 0
 
         returns json(dict)
         """
         # /{membershipType}/Account/{destinyMembershipId}/Character/{characterId}/Stats/Activities/
-        url = DESTINY2_URL + '{}/Account/{}/Character/{}/Stats/Activities/?count={}&mode={}&page={}'.format(membership_type, membership_id, character_id, count, mode, page)
+        url = DESTINY2_URL + '{}/Account/{}/Character/{}/Stats/Activities/?mode={}&count={}&page={}'.format(membership_type, membership_id, character_id, mode, count, page)
         return await self._get_request(url)
