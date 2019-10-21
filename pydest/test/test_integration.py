@@ -196,3 +196,12 @@ class TestGetMilestoneDefinitions(BaseTestClass):
         await destiny.close()
         return r
 
+class TestGetActivityHistory(BaseTestClass):
+
+    @pytest.mark.asyncio
+    @pytest.fixture
+    async def res(self):
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_activity_history(self._membership_type, self._membership_id, 0, 1, None, 0)
+        await destiny.close()
+        return r
