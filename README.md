@@ -333,11 +333,9 @@ This function is a coroutine.
 This function retreives additional information for a milestone from the destiny2 Manifest.
 
 **Response**: See [Destiny.Definitions.Milestones.DestinyMilestoneDefinition](https://bungie-net.github.io/multi/schema_Destiny-Definitions-Milestones-DestinyMilestoneDefinition.html#schema_Destiny-Definitions-Milestones-DestinyMilestoneDefinition)
----
-
-For additional information on how the API endpoints function, refer to the [official documentation](https://bungie-net.github.io/multi/index.html).
 
 ---
+
 
 > get_activity_history(membership_type, membership_id, character_id, count=1, mode=None, page=0)
 
@@ -355,6 +353,12 @@ Gets activity history stats for indicated character.
 
 **Response**
 See [Destiny.HistoricalStats.DestinyActivityHistoryResults](https://bungie-net.github.io/multi/schema_Destiny-HistoricalStats-DestinyActivityHistoryResults.html#schema_Destiny-HistoricalStats-DestinyActivityHistoryResults)
+
+---
+
+For additional information on how the API endpoints function, refer to the [official documentation](https://bungie-net.github.io/multi/index.html).
+
+---
 
 ## Running Tests
 
