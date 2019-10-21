@@ -337,6 +337,25 @@ This function retreives additional information for a milestone from the destiny2
 
 For additional information on how the API endpoints function, refer to the [official documentation](https://bungie-net.github.io/multi/index.html).
 
+---
+
+> get_activity_history(membership_type, membership_id, character_id, count=1, mode=None, page=0)
+
+This function is a coroutine.
+
+Gets activity history stats for indicated character.
+
+**Parameters**
+- `membership_type` - A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
+- `membership_id` - The full gamertag or PSN id of the player. Spaces and case are ignored.
+- `character_id` - ID of the character.
+- `count` - Number of rows to return.
+- `mode` - The game mode to include in the response (see [Destiny.HistoricalStats.Definitions.DestinyActivityModeType](https://bungie-net.github.io/multi/schema_Destiny-HistoricalStats-Definitions-DestinyActivityModeType.html#schema_Destiny-HistoricalStats-Definitions-DestinyActivityModeType)).
+- `page` - Page number to return, starting with 0.
+
+**Response**
+See [Destiny.HistoricalStats.DestinyActivityHistoryResults](https://bungie-net.github.io/multi/schema_Destiny-HistoricalStats-DestinyActivityHistoryResults.html#schema_Destiny-HistoricalStats-DestinyActivityHistoryResults)
+
 ## Running Tests
 
 There is a series of integration tests that can be run to verify that Pydest is working as intended. These tests will hit all supported Destiny 2 endpoints with well formed requests, and verify that a valid response is received. The main reason reason that these tests would fail, is if the Bungie.net servers are down, or the endpoints themselves have changed.
