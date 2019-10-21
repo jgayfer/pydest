@@ -324,7 +324,7 @@ class API:
         url = DESTINY2_URL + 'Manifest/DestinyMilestoneDefinition/{}'.format(milestone_hash)
         return await self._get_request(url)
  
-    async def get_activity_history(self, membership_type, membership_id, character_id=0, count=1, mode=None, page=0):
+    async def get_activity_history(self, membership_type, membership_id, character_id, count=1, mode=None, page=0):
         """Gets activity history stats for indicated character
         
         Args:
