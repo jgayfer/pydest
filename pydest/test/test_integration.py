@@ -178,6 +178,17 @@ class TestGetGroupForMember(BaseTestClass):
         await destiny.close()
         return r
 
+class TestGetMembersOfGroup(BaseTestClass):
+
+    @pytest.mark.asyncio
+    @pytest.fixture
+    async def res(self):
+        destiny = pydest.Pydest(api_key)
+        group = await destiny.api.get_groups_for_member(1, self._membership_id)
+        group_id = group['Response']['results'][0]['member']['groupId']
+        r = await destiny.api.get_members_of_group(group_id)
+        await destiny.close()
+        return r
 
 class TestGetMilestoneDefinitions(BaseTestClass):
 
