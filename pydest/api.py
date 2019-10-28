@@ -295,7 +295,7 @@ class API:
         url = url.format(membership_type, membership_id)
         return await self._get_request(url)
 
-    async def get_members_of_group(self, group_id):
+    async def get_members_of_group(self, group_id, page=1):
         """Gets members of a group_id 
         
         Args:
@@ -305,9 +305,9 @@ class API:
         Returns:
             json(dict)
         """
-        # /{group_id}/Members/?currentPage=1
-        url = GROUP_URL + '{}/Members/?currentPage=1'
-        url = url.format(group_id)
+        # /{group_id}/Members/?currentPage={page}
+        url = GROUP_URL + '{}/Members/?currentPage={}'
+        url = url.format(group_id, page)
         return await self._get_request(url)
 
 
