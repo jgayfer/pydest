@@ -316,6 +316,19 @@ Gets information about the clan of a member.
 
 ---
 
+> get_members_of_group()
+
+This function is a coroutine.
+
+Get the list of members and its related information in a given group.
+
+**Parameters**
+- `group_id` - The ID of the group.
+
+**Response**: See [GroupV2.GetMembersOfGroup](https://bungie-net.github.io/multi/operation_get_GroupV2-GetMembersOfGroup.html#operation_get_GroupV2-GetMembersOfGroup)
+
+---
+
 > get_weekly_milestones()
 
 This function is a coroutine.

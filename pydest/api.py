@@ -295,6 +295,21 @@ class API:
         url = url.format(membership_type, membership_id)
         return await self._get_request(url)
 
+    async def get_members_of_group(self, group_id, page=1):
+        """Gets members of a group_id 
+        
+        Args:
+            group_id (int):
+                Destiny group ID
+        
+        Returns:
+            json(dict)
+        """
+        # /{group_id}/Members/?currentPage={page}
+        url = GROUP_URL + '{}/Members/?currentPage={}'
+        url = url.format(group_id, page)
+        return await self._get_request(url)
+
 
     async def get_weekly_milestones(self, group_id):
         """Gets the weekly milestones for a clan
