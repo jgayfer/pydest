@@ -12,7 +12,7 @@ with open('credentials.json') as f:
 class BaseTestClass(object):
 
     _membership_id = 4611686018467257491
-    _membership_type = 4
+    _membership_type = 3
 
     @pytest.mark.asyncio
     async def test_is_dict(self, res):
