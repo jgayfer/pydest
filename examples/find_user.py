@@ -2,7 +2,7 @@ import pydest
 import asyncio
 
 
-platforms = {'XBOX': 1, 'PLAYSTATION': 2, 'PC': 4}
+platforms = {'XBOX': 1, 'PLAYSTATION': 2, 'PC': 3}
 
 async def main():
     """You will need to add your api key!"""
