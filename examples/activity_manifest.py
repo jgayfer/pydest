@@ -6,7 +6,7 @@ async def main():
     """You will need to add your api key!"""
     destiny = pydest.Pydest('api-key')
 
-    activity1 = await destiny.decode_hash(60002467, 'DestinyActivityDefinition')
+    activity1 = await destiny.decode_hash(18699611, 'DestinyActivityDefinition')
     await destiny.update_manifest()
     activity2 = await destiny.decode_hash(80726883, 'DestinyActivityDefinition')
 
