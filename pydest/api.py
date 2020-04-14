@@ -252,6 +252,22 @@ class API:
         url = url.format(membership_type, membership_id, character_id, ','.join([str(i) for i in groups]), ','.join([str(i) for i in modes]))
         return await self._get_request(url)
 
+    async def get_historical_stats_for_account(self, membership_type, membership_id, groups=[]):
+        """Gets aggregate historical stats organized around each character for a given account.
+
+        Args:
+            membership_type (int):
+                A valid non-BungieNet membership type (BungieMembershipType)
+            membership_id (int):
+                Destiny membership ID
+            groups (list - str/int):
+                A list containing the groups of stats to include in the response
+                (see Destiny.HistoricalStats.Definitions.DestinyStatsGroupType).
+        """
+        url = DESTINY2_URL + '{}/Account/{}/Stats/?groups={}'
+        url = url.format(membership_type, membership_id, ','.join([str(i) for i in groups]))
+        return await self._get_request(url)
+
 
     async def get_public_milestone_content(self, milestone_hash):
         """Gets custom localized content for the milestone of
