@@ -283,6 +283,22 @@ See [Destiny.HistoricalStats.DestinyHistoricalStatsByPeriod](https://bungie-net.
 
 ---
 
+> get_historical_stats_for_account(membership_type, membership_id, groups=[])
+
+This function is a coroutine.
+
+Gets aggregate historical stats organized around each character for a given account.
+
+**Parameters**
+- `membership_type` - A valid non-BungieNet membership type, or All. See [BungieMembershipType](https://bungie-net.github.io/multi/schema_BungieMembershipType.html#schema_BungieMembershipType)
+- `membership_id` - The full gamertag or PSN id of the player. Spaces and case are ignored.
+- `groups` - A list containing the groups of stats to include in the response (see [Destiny.HistoricalStats.Definitions.DestinyStatsGroupType](https://bungie-net.github.io/multi/schema_Destiny-HistoricalStats-Definitions-DestinyStatsGroupType.html#schema_Destiny-HistoricalStats-Definitions-DestinyStatsGroupType)).
+
+**Response**
+See [Destiny.HistoricalStats.DestinyHistoricalStatsAccountResult](https://bungie-net.github.io/multi/schema_Destiny-HistoricalStats-DestinyHistoricalStatsAccountResult.html#schema_Destiny-HistoricalStats-DestinyHistoricalStatsAccountResult)
+
+---
+
 > get_public_milestone_content(milestone_hash)
 
 This function is a coroutine.

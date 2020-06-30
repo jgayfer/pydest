@@ -216,3 +216,14 @@ class TestGetActivityHistory(BaseTestClass):
         r = await destiny.api.get_activity_history(self._membership_type, self._membership_id, 0, 1, None, 0)
         await destiny.close()
         return r
+
+
+class TestGetHistoricalStatsForAccount(BaseTestClass):
+
+    @pytest.mark.asyncio
+    @pytest.fixture
+    async def res(self):
+        destiny = pydest.Pydest(api_key)
+        r = await destiny.api.get_historical_stats_for_account(self._membership_type, self._membership_id, [0])
+        await destiny.close()
+        return r
