@@ -79,7 +79,18 @@ class API:
         url = DESTINY2_URL + 'Manifest'
         return await self._get_request(url)
 
+    
+    async def get_destiny_entity_definition(self, entity_type, hash_identifier):
+        """Returns the current version of the manifest
 
+        Returns:
+            json (dict)
+        """
+        url = DESTINY2_URL + 'Manifest/{}/{}/'
+        url = url.format(entity_type, hash_identifier)
+        return await self._get_request(url)
+
+    
     async def search_destiny_entities(self, entity_type, search_term, page=0):
         """Gets a page list of Destiny items
 
