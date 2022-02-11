@@ -152,6 +152,21 @@ Get the current version of the manifest. This api call shouldn't be needed much,
 
 ---
 
+> get_destiny_entity_definition(entity_type, hash_identifier)
+
+This function is a coroutine.
+
+Returns the static definition of an entity of the given Type and hash identifier
+
+**Parameters**
+- `entity_type` - The type of entity - ex. 'DestinyInventoryItemDefinition'
+- `hash_identifier` - The hash identifier for the specific Entity you want returned.
+
+**Response**: 
+See [Destiny2.GetDestinyEntityDefinition](https://bungie-net.github.io/multi/schema_Destiny-Definitions-DestinyDefinition.html#schema_Destiny-Definitions-DestinyDefinition)
+
+---
+
 > search_destiny_entities(entity_type, search_term, page=0)
 
 This function is a coroutine.
