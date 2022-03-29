@@ -81,7 +81,7 @@ Aside from the very first time this function is called (when the manifest is dow
 **Parameters**
 - `hash_id` - The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally. When entities refer to each other in Destiny content, it is this hash that they are referring to.
 - `definition` - The type of entity to be decoded. In the [official documentation](https://bungie-net.github.io/multi/index.html), these entities are proceeded by a blue 'Manifest' tag (eg. *DestinyClassDefinition*).
-- `language` [optional] - The desired language of the response, given as a string. The following languages are supported (and should be given as shown): en, fr, es, de, it, ja, pt-br, es-mx, ru, pl, zn-cht. If no language is given, English will be used.
+- `language` [optional] - The desired language of the response, given as a string. The following languages are supported (and should be given as shown): en, fr, es, de, it, ja, pt-br, es-mx, ru, pl, zn-cht, ko, zh-chs. If no language is given, English will be used.
 
 **Returns**: Python dictionary containing static information that the given hash and definition represent in JSON.
 
@@ -96,7 +96,7 @@ This function is a coroutine.
 Updates the manifest corresponding to the language given. If no language is given, the default is English. This function is designed to be used for a program that is running for extended periods of time where the manifest may need to be updated. Usually the manifest is only updated the first time that `decode_hash()` is called. But as the manifest will likely change over time, this function will help keep the manifest current.
 
 **Parameters**
-- `language` [optional] - The desired language of the response, given as a string. The following languages are supported (and should be given as shown): en, fr, es, de, it, ja, pt-br, es-mx, ru, pl, zn-cht. If no language is given, English will be used.
+- `language` [optional] - The desired language of the response, given as a string. The following languages are supported (and should be given as shown): en, fr, es, de, it, ja, pt-br, es-mx, ru, pl, zn-cht, ko, zh-cht. If no language is given, English will be used.
 
 ### API
 
