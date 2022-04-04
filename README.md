@@ -96,7 +96,7 @@ This function is a coroutine.
 Updates the manifest corresponding to the language given. If no language is given, the default is English. This function is designed to be used for a program that is running for extended periods of time where the manifest may need to be updated. Usually the manifest is only updated the first time that `decode_hash()` is called. But as the manifest will likely change over time, this function will help keep the manifest current.
 
 **Parameters**
-- `language` [optional] - The desired language of the response, given as a string. The following languages are supported (and should be given as shown): en, fr, es, de, it, ja, pt-br, es-mx, ru, pl, zn-cht, ko, zh-cht. If no language is given, English will be used.
+- `language` [optional] - The desired language of the response, given as a string. The following languages are supported (and should be given as shown): en, fr, es, de, it, ja, pt-br, es-mx, ru, pl, zn-cht, ko, zh-chz. If no language is given, English will be used.
 
 ### API
 
