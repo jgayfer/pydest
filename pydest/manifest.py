@@ -16,7 +16,7 @@ class Manifest:
     def __init__(self, api):
         self.api = api
         self.manifest_files = {'en': '', 'fr': '', 'es': '', 'de': '', 'it': '', 'ja': '', 'pt-br': '', 'es-mx': '',
-                               'ru': '', 'pl': '', 'zh-cht': ''}
+                               'ru': '', 'pl': '', 'zh-cht': '', 'ko': '', 'zh-chs': ''}
 
     async def decode_hash(self, hash_id, definition, language):
         """Get the corresponding static info for an item given it's hash value
