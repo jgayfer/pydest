@@ -4,7 +4,7 @@ Pydest is an asynchronous API wrapper for Destiny 2 written in Python. The goal 
 
 Here are some examples of Pydest in action (assuming this code is running in an event loop):
 
-```
+```python
 import pydest
 
 destiny = pydest.Pydest('your-api-key')
@@ -14,7 +14,7 @@ await destiny.close()
 
 Pydest also has full support for easily decoding hash values from the Destiny 2 manifest.
 
-```
+```python
 import pydest
 
 destiny = pydest.Pydest('your-api-key')
